@@ -1,0 +1,5 @@
+﻿  Source.c
+C:\Users\Пользователь\source\repos\laba1\laba1\Source.c(240,8): warning C4101: j: неиспользованная локальная переменная
+C:\Users\Пользователь\source\repos\laba1\laba1\Source.c(255,9): warning C4101: x0: неиспользованная локальная переменная
+C:\Users\Пользователь\source\repos\laba1\laba1\Source.c(254,9): warning C4101: dx: неиспользованная локальная переменная
+  laba1.vcxproj -> C:\Users\Пользователь\source\repos\laba1\Debug\laba1.exe

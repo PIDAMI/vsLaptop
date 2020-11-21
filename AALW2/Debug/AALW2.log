@@ -1,0 +1,12 @@
+﻿  CUL.c
+  JUL.c
+  Man.c
+C:\Users\Пользователь\source\repos\AALW2\Man.c(44,79): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Users\Пользователь\source\repos\AALW2\Man.c(45,85): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Users\Пользователь\source\repos\AALW2\Man.c(46,82): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+  THR.c
+  UNI.c
+C:\Users\Пользователь\source\repos\AALW2\UNI.c(90,1): warning C4305: инициализация: усечение из "double" в "const float"
+  verylong.c
+  Создание кода...
+  AALW2.vcxproj -> C:\Users\Пользователь\source\repos\AALW2\Debug\AAL2.exe
