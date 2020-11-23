@@ -1,0 +1,4 @@
+﻿  Source.c
+D:\79088\Documents\GitHub\vsLaptop\laba1\laba1\Source.c(247,8): warning C4101: j: неиспользованная локальная переменная
+D:\79088\Documents\GitHub\vsLaptop\laba1\laba1\Source.c(261,9): warning C4101: dx: неиспользованная локальная переменная
+  laba1.vcxproj -> D:\79088\Documents\GitHub\vsLaptop\laba1\x64\Debug\laba1.exe
