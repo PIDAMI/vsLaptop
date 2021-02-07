@@ -1,305 +1,255 @@
 #include "Header.h"
-#define SIZE 10
-#define TESTS 9
-// back to c for callocs to work properly
-// simple iteration method for 3rd lab
-// infinite norm used everywhere
 
-typedef struct {
-	double matrix[SIZE][SIZE];
-} mtr;
+// построить интерпол€ционный полином эрмита с сеткой чебышева
+// x_0,x_n - границы интервала, x,y,yDer - заданные значени€ в узлах(n+1 штук)
+// n - кол-во узлов
+// x_eval - точки, в которых вычисл€етс€ полином, density - их кол-во
+// возвращает density значений полинома в интервале(аргумент равномерно распределен)
+double* HermInterChebNet(double x_0, double x_n, int n, double* x, double* y, double* yDer, int density, double* x_eval) {
+	double total = 0;
+	double quad_prod = 1;
+	double lagr_sum = 0;
+	double single_term = 0;
+	double* result = (double*)calloc(density + 1, sizeof(double));
+	if (result == NULL) {
+		printf("not enough mmry\n");
+		return NULL;
+	}
 
-
-double MatrixInfNorm(mtr m) {
-	double max=0;
-	double tmp = 0;
-	for (int i = 0; i < SIZE; i++) {
-		for (int j = 0; j < SIZE; j++) {
-			tmp += fabs(m.matrix[i][j]);
-		}
-		if (tmp > max) {
-			max = tmp;
-		}
-		tmp = 0;
+	if (x_0 >= x_n) {
+		printf("x_0>=x_n\n");
+		return NULL;
 	}
-	
-	return max;
-}
-
-void NthVectorFromMatrix(double* vector, mtr mat, int n) {
-	// fills vector w/ elements from nth column of mat
-	for (int i = 0; i < SIZE; i++) {
-		vector[i] = mat.matrix[i][n];
+	if (n <= 0) {
+		printf("n<=0\n");
+		return NULL;
 	}
-	return;
-}
-// функци€ записывает в массив элементы из энного столбца матрицы
-// принимает массив дл€ хранени€ элементов. матрицу и номер столбца
-// ничего не возвращает
-double VectorNormInf(double* vector) {
-	double max = vector[0];
-	for (int i = 0; i < SIZE; i++) {
-		if (fabs(vector[i]) > fabs(max)) {
-			max = vector[i];
-		}
-	}
-	return fabs(max);
-}
-// вычисл€ет бесконечную норму вектора
-// принимает массив с элементами из вектора
-//возвращает бесконечную норму вектора
-mtr BuildHouseholderMatrixNRow(double* a, int n) {
-	// nth Housholder matrix in 10d
-	double sign = 0;
-	if (a[n] > 0) {
-		sign = -1;
-	}
-	else {
-		sign = 1;
-	}
-	double s1 = sign * VectorNorm2(a, n);
-	double n1 = 1 / sqrt(2 * s1 * (s1 - a[n]));
-	double* a1 = (double*)calloc(SIZE, sizeof(double));
-	for (int i = n; i < SIZE; i++) {
-		a1[i] = n1 * a[i];
-	}
-	a1[n] -= n1 * s1;
-	mtr m = { 0 }; // SIZE taken as an example
-	for (int i = 0; i < SIZE; i++) {
-		for (int j = i; j < SIZE; j++) {
-			if (i == j) {
-				m.matrix[j][i] = 1 - 2 * a1[i] * a1[j];
+	for (int q = 0; q <= density; q++) {
+		for (int i = 0; i <= n; i++) {
+			single_term = (x_eval[q] - x[i]) * yDer[i];
+			for (int j = 0; j <= n; j++) {
+				if (i != j) {
+					lagr_sum += (x_eval[q] - x[i]) / (x[i] - x[j]);
+				}
 			}
-			else {
-				m.matrix[i][j] = m.matrix[j][i] = -2 * a1[i] * a1[j];
-
+			for (int k = 0; k <= n; k++) {
+				if (i != k) {
+					quad_prod *= pow((x_eval[q] - x[k]) / (x[i] - x[k]), 2);
+				}
 			}
+			total += (single_term + (1 - 2 * lagr_sum) * y[i]) * quad_prod;
+			single_term = 0;
+			lagr_sum = 0;
+			quad_prod = 1;
 		}
-	}
-	free(a1);
-	return m;
-}
-// строит матрицу хаусхолдера, обнул€ющую энный столбец матрицы
-// принимает массив из элементов столбца матрицы и номер столбца
-// возвращает матрицу с обнуленным столбцом
-double VectorNorm2(double* vector, int k) {	// inf norm for 10d vector
-	double sum = 0;							// starting from kth element
-	for (int i = k; i < SIZE; i++) {
-		sum += pow(vector[i], 2);
-	}
-	return sqrt(sum);
-}
-
-mtr MatrixProduct(const mtr m1, const mtr  m2) { // for 10x10 matrices
-	mtr m = { 0 };
-	for (int i = 0; i < SIZE; i++) {
-		for (int j = 0; j < SIZE; j++) {
-			for (int k = 0; k < SIZE; k++) {
-				m.matrix[i][j] += m1.matrix[i][k] * m2.matrix[k][j];
-			}
-		}
+		result[q] = total;
+		total = 0;
 	}
 
-	return m;
-}
-// вычисл€ет произведение матриц
-// принимает две матрицы
-// возвращает матрицу, €вл€ющуюс€ произведением введенных
-void RightSideProduct( mtr m, double* b, double* container) {
-	double* b1 = (double*)calloc(SIZE, sizeof(double));
-	for (int i = 0; i < SIZE; i++) {
-		for (int j = 0; j < SIZE; j++) {
-			b1[i] += b[j] * m.matrix[i][j];
-		}
-	}
-	for (int j = 0; j < SIZE; j++) {
-		container[j] = b1[j];
-	}
-	free(b1);
-	return;  
-}
-// вычисл€ет произведение матрицы на вектор
-// принимает матрицу и массив из элементов вектор
-// возвращает вектор, €вл€ющийс€ произведением матрицы и вектора
-void PrintMatrix(const mtr* m) {
-	for (int i = 0; i < SIZE; i++) {
-		for (int j = 0; j < SIZE; j++) {
-			printf("%6.1lf ", m->matrix[i][j]);
-		}
-		printf("\n");
-	}
-	return;
+	/*double* y_eval = Y(density, x_eval);
+	for (int i = 0; i <= density; i++) {
+		result[i] -= y_eval[i];
+	}*/
+
+
+	return result;
 }
 
-double SolveSystem(const mtr m, const double * b, const double  * X) {
-	// X - analitycal solution; returns relative error
-	double* x = (double*)calloc(SIZE, sizeof(double));
-	double sum = 0;
-	for (int i = 9; i > -1; i--) {
-		for (int j = 0; j < SIZE; j++) {
-			sum += x[j] * m.matrix[i][j];
-		}
-		x[i] = (b[i] - sum) / m.matrix[i][i];
-		sum = 0;
-	}
-	for (int i = 0; i < SIZE; i++) {
-		printf("x%d = %.8lf\n", i, x[i]);
-	}
-	double* tmp = (double*)calloc(SIZE, sizeof(double));
-	for (int i = 0; i < SIZE; i++) {
+//3.12
+double* Nodes(int n, double a, double b) {
+	double* x = (double*)calloc((n + 1), sizeof(double));
+	for (int i = 0; i <= n; i++) {
+		x[i] = (a + b) / 2 + 
+			(b - a) / 2 * pow(cos(PI * (2 * i + 1) / (2 * n + 2)), 1) ;
 		
-		tmp[i]= fabs(X[i] - x[i]);
-	// tmp = X - x;
 	}
-	double max = VectorNormInf(tmp);
-	printf("ABSOLUTE ERROR IN SOLUTION = %le\n", max);
-	free(x);
-	return max;
-}
-// выполн€ет обратный ход метода √аусса
-// принимает верхнюю треугольную матрицу, вектор правой части и вектор точного решени€ системы
-// возвращает относительную погрешность в решении
-
-
-//double q,const double* x0
-
-int Jacobi(const mtr m, const double* b, double eps, double *xExact) {
-	int i, j, iter = 0;
-	double* x=calloc(SIZE,sizeof(double));
-	double* prev = calloc(SIZE, sizeof(double));;
-	double* delta = calloc(SIZE, sizeof(double));;
-	mtr M = m;
-	
-
-
-	double max= 0;
-	int i_max=0, j_max=0;
-	for (i = 0; i < SIZE; i++) {
-		for (j = 0; j < SIZE; j++) {
-
-			if (max < m.matrix[i][j]) {
-				max = m.matrix[i][j];
-				i_max = i;
-				j_max = j;
-			}
-		}
-	}
-
-
-	
-	// q= 1.3168
-	for (i = 0; i < SIZE; i++) {
-		for (j = 0; j < SIZE; j++) {
-			if (i == j) 
-				M.matrix[i][j] = 1 - M.matrix[i][j] / max;
-			else 
-				M.matrix[i][j] =  - M.matrix[i][j] / max;
-		}
-	}
-	
-	double qNew = MatrixInfNorm(M);
-	printf("NEW Q IS %lf\n",qNew);
-
-	do {
-		iter++;
-		
-
-		RightSideProduct(M, prev, x);
-		for (i = 0; i < SIZE; i++) {
-			x[i] = x[i] + (b[i] / max);
-		}
-		
-		/*printf("ITERATION %d\n", iter);
-		for (i = 0; i < SIZE; i++) 
-			printf("x%d = %lf\n", i + 1, x[i]);*/
-
-		/*for (i = 0; i < SIZE; i++) {
-			prev[i] = b[i];
-			for (j = 0; j < SIZE; j++) {
-				 if (i != j) prev[i] -= m.matrix[i][j] * x[j];
-			}
-			prev[i] /= m.matrix[i][j];
-		}*/
-
-		for (int h = 0; h < SIZE; h++) {
-			delta[h] = x[h] - prev[h];
-			prev[h] = x[h];
-		}
-	} while (VectorNormInf(delta)  > eps * fabs((1 - qNew)/qNew));
-	for (j = 0; j < SIZE; j++)
-		printf("x=%lf, xExacte=%lf\n",x[j],xExact[j]);
-	
-	RightSideProduct(m, x, x);
-
-	for (j = 0; j < SIZE; j++)
-		delta[j] = x[j] - b[j];
-	
-	double dx = VectorNormInf(delta);
-	
-	free(delta);
-	free(x);
-	free(prev);
-	return iter;
+	return x;
 }
 
-int main(void)
+double* NodesMod(int n, double a, double b) {
+	double* x = (double*)calloc((n + 1), sizeof(double));
+	for (int i = 0; i <= n; i++) {
+		x[i] = (a + b) / 2 +
+			(b - a) / 2 * pow(cos(PI * (2 * i + 1) / (2 * n + 2)), 1)
+			- (b - a) /  12 * i * i/ n / n / n /n;
+			;
+
+	}
+	return x;
+}
+//- (b - a) / 15 * i * i / n / n / n /n;
+
+double* Y(int n, double* x) {
+	double* y = (double*)calloc((n + 1), sizeof(double));
+	for (int i = 0; i <= n; i++) {
+		y[i] = tan(x[i] / 2 + 0.2) - pow(x[i], 2);
+	}
+
+	return y;
+}
+
+double* YDer(int n, double* x) {
+	double* y = (double*)calloc((n + 1), sizeof(double));
+	for (int i = 0; i <= n; i++) {
+		y[i] = 0.5 / pow(cos(x[i] / 2 + 0.2), 2) - 2 * x[i];
+	}
+
+	return y;
+}
+
+double* linspaces(int n, double x_0, double x_n) {
+	double* y = (double*)calloc(n + 1, sizeof(double));
+	for (int i = 0; i <= n; i++) {
+		y[i] = x_0 + (x_n - x_0) * (double)i / (double)n;
+	}
+
+	return y;
+}
+
+
+void UnMod(double*x,double*y,double*yDer,int n, int density, double*y_eval,double*x_eval,FILE*ffp ) {
+	int i;
+	for (i = 0; i <= n; i++)
+		fprintf(ffp, "%lf ", x[i]);
+	double* y_eval_node = HermInterChebNet(X0, XN, n, x, y, yDer, n, x);
+	for (i = 0; i <= n; i++)
+		fprintf(ffp, "%lf ", y[i] - y_eval_node[i]
+		);
+	for (i = 0; i <= density; i++)
+		fprintf(ffp, "%lf ", x_eval[i]);
+	fprintf(ffp, "\n");
+	double* y_exact = Y(density, x_eval);
+	for (i = 0; i <= density; i++)
+		fprintf(ffp, "%lf ", y_eval[i] - y_exact[i]
+		);
+}
+
+
+void Mod(double* xMod, double* yMod, double* yDerMod, int n, int density, double* y_eval_mod, double* x_eval2, FILE* ffp) {
+	int i;
+	for (i = 0; i <= n; i++)
+		fprintf(ffp, "%lf ", xMod[i]);
+	double* y_eval_nodeMod = HermInterChebNet(X0, XN, n, xMod, yMod, yDerMod, n, xMod);
+	for (i = 0; i <= n; i++)
+		fprintf(ffp, "%lf ", yMod[i]//- y_eval_nodeMod[i]
+		); 
+	for (i = 0; i <= density; i++)
+		fprintf(ffp, "%lf ", x_eval2[i]);
+	fprintf(ffp, "\n");
+	double* y_exact2 = Y(density, x_eval2);
+	for (i = 0; i <= density; i++)
+		fprintf(ffp, "%.15le ", y_eval_mod[i]//- y_exact2[i]
+		);
+}
+
+
+void MaxErrUnMod(double* x, double* y, double* yDer, int n, int density, double* y_eval, double* x_eval, FILE* ffp) {
+	int i;
+	/*for (i = 0; i <= n; i++)
+		fprintf(ffp, "%lf ", x[i]);
+	double* y_eval_node = HermInterChebNet(X0, XN, n, x, y, yDer, n, x);
+	for (i = 0; i <= n; i++)
+		fprintf(ffp, "%lf ", y[i] - y_eval_node[i]
+		);
+	for (i = 0; i <= density; i++)
+		fprintf(ffp, "%lf ", x_eval[i]);
+	fprintf(ffp, "\n");
+	*/
+	double* y_exact = Y(density, x_eval);
+	double mx = 0;
+	for (i = 0; i <= density; i++) {
+		if (fabs(y_eval[i] - y_exact[i]) > mx)
+			mx = fabs(y_eval[i] - y_exact[i]);
+	}
+	fprintf(ffp, "%.15le ", mx);
+
+	
+}
+
+void MaxErrMod(double* xMod, double* yMod, double* yDerMod, int n, int density, double* y_eval_mod, double* x_eval2, FILE* ffp) {
+	int i;
+	//for (i = 0; i <= n; i++)
+	//	fprintf(ffp, "%lf ", xMod[i]);
+	//double* y_eval_nodeMod = HermInterChebNet(X0, XN, n, xMod, yMod, yDerMod, n, xMod);
+	//for (i = 0; i <= n; i++)
+	//	fprintf(ffp, "%lf ", yMod[i]//- y_eval_nodeMod[i]
+	//	);
+	//for (i = 0; i <= density; i++)
+	//	fprintf(ffp, "%lf ", x_eval2[i]);
+	//fprintf(ffp, "\n");
+	double* y_exact2 = Y(density, x_eval2);
+	double mx = 0;
+	for (i = 0; i <= density; i++) {
+		if (fabs(y_exact2[i] - y_eval_mod[i]) > mx)
+			mx = fabs(y_exact2[i] - y_eval_mod[i]);
+	}
+	fprintf(ffp, "%.15le ", mx);
+}
+
+int main(int argc, char** argv)
 {
-	int i,j;
-	int iters[TESTS] = { 0 };
-	double xNum[SIZE] = { 0 };
-	double b[SIZE] = { 0 };
-	double x[SIZE] = {0};//analytical solution
-	mtr m = { 0 };
-	mtr mShift = { 0 };
-	FILE* fp = fopen("dataz.txt", "r");
-	if (fp == NULL) {
-		printf("no file");
-		return 0;
-	}
 	
+	int i;
+	int n = 3;
+	if (argc > 1)
+		n = atoi(argv[1]);
+	double* x = Nodes(n, X0, XN);
+	double* xMod = NodesMod(n, X0, XN);
+	double* y = Y(n, x);
+	double* yMod = Y(n, xMod);
+	double* yDer = YDer(n, x);
+	double* yDerMod = YDer(n, xMod);
 	
-	double dx[TESTS];
-	for (int h = 0; h < TESTS; h++) {
-		for (i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				fscanf(fp, "%lf,", &m.matrix[i][j]);
-			}
-		}
-		for (i = 0; i < SIZE; i++) { // analytical solution
-			fscanf(fp, "%lf,", b + i);
-		}
-		for (i = 0; i < SIZE; i++) { // right side
-			fscanf(fp, "%lf,", x + i);
-		}
-		//PrintMatrix(&m);
-		
-		iters[h] = Jacobi(m, b, 0.01,x);
-		//for (i = 0; i <TESTS; i++) {
-		//	/*for (j = 0; j < SIZE; j++) {
-		//		x0[j] = b[j] + 34*(double)i;
-		//	}
-		//	x0FirstElem[i] = x0[1];*/
-		//	iters[i] = Jacobi(m, b, pow(10,-i)/10,q,x0);
-		//}
-	}
-	fclose(fp);
-
-
-//	for (i = 0; i < TESTS; i++)  printf("eps = 10^%d,iterations = %d \n",i+1,iters[i]);
-
 
 	FILE* ffp = fopen("d.txt", "w");
 	if (ffp == NULL) {
 		perror("file not FOUnd; ");
-		return 0;
+		return -2;
 	}
-	// det = 5, dx=0.001130; 
-	for (i = 0; i < TESTS; i++)  fprintf(ffp, "%d ", iters[i]);
-	fclose(ffp);
-
-
-	//19306 251 202 177 151 106 58 19 
 	
+	
+		int density = (XN - X0) / STEP_EVAL; // step_eval % 10 = 0
+
+
+		double* x_eval = linspaces(density, X0, XN);
+		double* x_eval2 = linspaces(density, X0, XN);
+		double* y_eval = HermInterChebNet(X0, XN, n, x, y, yDer, density, x_eval);
+		double* y_eval_mod = HermInterChebNet(X0, XN, n, xMod, yMod, yDerMod, density, x_eval2);
+		if (y_eval == NULL) {
+			printf("smth went wrong");
+			return -1;
+		}
+
+
+
+		/*double* xMid = (double*)calloc(n, sizeof(double));
+		for (int i = 0; i < n; i++) {
+			xMid[i] = (xMod[i] + xMod[i + 1]) / 2;
+		}
+		double* yMid = HermInterChebNet(X0, XN, n, xMod, yMod, yDerMod, n - 1, xMid);
+		double* yMid_exact = Y(n - 1, xMid);
+		for (int i = 0; i < n; i++) {
+			printf("x%d=%lf\t dy%d=%lf\n", i, xMid[i], i, yMid[i]-yMid_exact[i]);
+		}*/
+
+		//UnMod(x, y, yDer, n, density, y_eval, x_eval, ffp);
+		//Mod(xMod, yMod, yDerMod, n, density, y_eval_mod, x_eval2, ffp);
+		MaxErrMod(xMod, yMod, yDerMod, n, density, y_eval_mod, x_eval2, ffp);
+		MaxErrUnMod(x, y, yDer, n, density, y_eval, x_eval, ffp);
+
+	
+	fclose(ffp);
+	free(x_eval);
+	free(y_eval);
+	free(x);
+	free(y);
+	free(yDer);
+	
+
+
+
+	
+
 
 	return 0;
 }
