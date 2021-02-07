@@ -1,0 +1,3 @@
+﻿  main.cpp
+D:\79088\Documents\GitHub\vsLaptop\lab_Num\lab_Num\main.cpp(221,14): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+  lab_Num.vcxproj -> D:\79088\Documents\GitHub\vsLaptop\lab_Num\Debug\lab_Num.exe
