@@ -5,3 +5,4 @@
 *.opendb
 /laba1
 CMakeProject1/**
+*.ipch
