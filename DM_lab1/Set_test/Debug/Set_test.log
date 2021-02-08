@@ -1,2 +1,3 @@
 ﻿  test.cpp
+Set.obj : warning LNK4075: не учитывается "/EDITANDCONTINUE" из-за спецификации "/SAFESEH"
   Set_test.vcxproj -> D:\79088\Documents\GitHub\vsLaptop\DM_lab1\Debug\Set_test.exe

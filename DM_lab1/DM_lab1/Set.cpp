@@ -1,6 +1,14 @@
 #include "Set.h"
 using namespace std;
 
+
+
+Set::Set(const string& _name) {
+    size = 0;
+    head = nullptr;
+    name = _name;
+}
+
 node::node() {
     data = "";
     next = nullptr;
@@ -14,9 +22,7 @@ node::node(const string& str, node* nxt) {
     next = nxt;
 }
 
-node* Set::Head() {
-    return head;
-}
+
 
 node* Set::Find(const string& data){
     node * tmp = head;
@@ -54,6 +60,13 @@ Set::Set(node* _head, size_t _size) {
     size = _size;
 }
 
+Set::Set(vector <string> elems) {
+    
+    for (const auto& item : elems) {
+        this->Add(item);
+    }
+}
+
 
 size_t Set::Power() const {
     return size;
@@ -68,8 +81,8 @@ bool Set::Check(const string& data) {
     return false;
 
 }
-// a b w
-int Set::Add(const string& data) {
+
+int Set::Add(const string& data ) {
     if ((this->Check(data))) {
         string message = data + " is already in the set";
         throw invalid_argument(message.c_str());
@@ -129,51 +142,13 @@ int Set::Del(const string& data) {
 
 void Set::Print() {
     node* tmp = head;
-    for (size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size-1; i++) {
         cout << tmp->data << ' ';
         tmp = tmp->next;
     }
+    cout << tmp->data;
 }
 
-Set Set::Union(const Set& b) {
-    size_t union_power = 0;
-    node* union_head = merge_lists(head, b.head, union_power);
-    return { union_head, union_power };
-}
-
-bool Set::Includes(const Set& B) {
-    node* a = head;
-    node* b = B.head;
-    while (a && b) {
-        if (b->data < a->data) {
-            return false;
-        }
-        else if (b->data > a->data) {
-            a = a->next;
-        }
-        else {
-            a = a->next;
-            b = b->next;
-        }
-
-    }
-   
-    return (b==nullptr);
-}
-
-Set Set::Intersection(const Set& b) {
-    node* a_i = head;
-    node* b_i = b.head;
-    node* res_head = nullptr;
-    node* res_tail = nullptr;
-    while (a_i && b_i) {
-        if (a_i->data < b_i->data) {
-            a_i = a_i->next;
-        }
 
 
-    }
-    return {};
-
-}
 
