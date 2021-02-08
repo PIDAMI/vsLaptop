@@ -1,0 +1,6 @@
+﻿  Set.cpp
+  Set_Operations.cpp
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set_Operations.cpp(22,8): warning C4101: nxt_node: неиспользованная локальная переменная
+  main.cpp
+  Создание кода...
+  DM_lab1.vcxproj -> D:\79088\Documents\GitHub\vsLaptop\DM_lab1\Debug\DM_lab1.exe

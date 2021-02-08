@@ -11,16 +11,20 @@ for n=i:j
 com = "lab_Num.exe " + int2str(n);
 system(com);
 fp = fopen("d.txt","r");
-%nodex =fscanf(fp,"%f ",n+1);
-%nodey =fscanf(fp,"%f ",n+1);
+nodex =fscanf(fp,"%f ",n+1);
+nodey =fscanf(fp,"%f ",n+1);
 x=fscanf(fp,"%f ",n);
 y=fscanf(fp,"%f ",n);
+nodexMod =fscanf(fp,"%f ",n+1);
+nodeyMod =fscanf(fp,"%f ",n+1);
 xmod=fscanf(fp,"%f ",n);
 ymod=fscanf(fp,"%f ",n);
 
 hold on
 % p(n-i+1)=plot(x,y);
-% plot(nodex,nodey,'o')
+plot(nodex,nodey,'go');
+plot(nodexMod,nodeyMod,'ro');
+
 plot(x,y,'g');
 plot(xmod,ymod,'r');
 end

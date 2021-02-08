@@ -1,3 +1,0 @@
-﻿D:\Program Files\Visual Studio\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(473,5): warning MSB8003: свойство WindowsSDKDir не определено. Возможно, не найдены некоторые средства сборки.
-  Source.c
-D:\79088\Documents\GitHub\vsLaptop\laba1\laba1\Header.h(6,10): fatal error C1083: Не удается открыть файл включение: stdio.h: No such file or directory,

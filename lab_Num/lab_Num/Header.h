@@ -14,20 +14,18 @@
 #define PI 3.14159265
 #define X0 3.0
 #define XN 8.0
-typedef struct {
-	double matrix[SIZE][SIZE];
-} mtr;
 
-double MatrixInfNorm(mtr m);
-void NthVectorFromMatrix(double* vector, mtr mat, int n);
-double VectorNormInf(double* vector);
-mtr BuildHouseholderMatrixNRow(double* a, int n);
-mtr MatrixProduct(const mtr m1, const mtr  m2);
-void RightSideProduct(mtr m, double* b, double* container);
-void PrintMatrix(const mtr* m);
-double SolveTrianglSystem(const mtr m, const double* b, const double* X);
-int JacobiSyst(const mtr m, const double* b, double eps, double* xExact);
-double VectorNorm2(double* vector, int k);
+void MaxErrMod(double* xMod, double* yMod, double* yDerMod, int n, int density, double* y_eval_mod, double* x_eval2, FILE* ffp);
+void MaxErrUnMod(double* x, double* y, double* yDer, int n, int density, double* y_eval, double* x_eval, FILE* ffp);
+void Mod(double* xMod, double* yMod, double* yDerMod, int n, int density, double* y_eval_mod, double* x_eval2, FILE* ffp);
+void UnMod(double* x, double* y, double* yDer, int n, int density, double* y_eval, double* x_eval, FILE* ffp);
+double* YDer(int n, double* x);
+double* Y(int n, double* x);
+double* mid_node(double* x, int n);
+double* NodesMod(int n, double a, double b);
+double* Nodes(int n, double a, double b);
+double* HermInterChebNet(double x_0, double x_n, int n, double* x, double* y, double* yDer, int density, double* x_eval);
+double* linspaces(int n, double x_0, double x_n);
 
 #endif // !__HEADER__
 

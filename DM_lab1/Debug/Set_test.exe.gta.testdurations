@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Executable>D:\79088\Documents\GitHub\vsLaptop\DM_lab1\Debug\Set_test.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="TestCaseName.TestName" Duration="1" />
+    <TestDuration Test="SetAdd.AddFirstElem" Duration="1" />
+    <TestDuration Test="SetAdd.AddExistingElemReturnNegVal" Duration="1" />
+    <TestDuration Test="SetAdd.AddToEnd" Duration="1" />
+    <TestDuration Test="SetAdd.AddInMiddle" Duration="1" />
+    <TestDuration Test="SetPower.EmptySetReturnZero" Duration="1" />
+    <TestDuration Test="SetPower.NonEmptySetReturnValidVal" Duration="1" />
+    <TestDuration Test="SetDel.DelNonExistingElemReturnNegVal" Duration="1" />
+    <TestDuration Test="SetDel.DelElemReturnValidVal" Duration="1" />
+    <TestDuration Test="SetDel.DelLastElemReturnValidVal" Duration="1" />
+    <TestDuration Test="SetDel.DelMidElemReturnValidVal" Duration="1" />
+    <TestDuration Test="SetDel.DelHeadReturnValidVal" Duration="1" />
+    <TestDuration Test="SetDel.DelOnlyElemValidVal" Duration="1" />
+    <TestDuration Test="SetIncludes.NoCommonElementsReturnFalse" Duration="1" />
+    <TestDuration Test="SetIncludes.EmptySetAsParamReturnFalse" Duration="1" />
+    <TestDuration Test="SetIncludes.BothEmptySetsReturnTrue" Duration="1" />
+    <TestDuration Test="SetIncludes.MainSetEmptyReturnFalse" Duration="1" />
+    <TestDuration Test="SetIncludes.EqualPowerAndHaveSomeCommonElemsReturnFalse" Duration="1" />
+    <TestDuration Test="SetIncludes.SecondSetBiggerReturnFalse" Duration="1" />
+    <TestDuration Test="SetIncludes.IncludesReturnTrue" Duration="1" />
+    <TestDuration Test="SetIncludes.EqualSetsReturnTrue" Duration="1" />
+    <TestDuration Test="SetIncludes.EmptySetAsParamReturnTrue" Duration="1" />
+    <TestDuration Test="SetUnion.EmptySetsReturnEmptySet" Duration="1" />
+    <TestDuration Test="SetUnion.FirstSetEmptyReturnEmptySet" Duration="2" />
+    <TestDuration Test="SetUnion.SecondSetEmptyReturnEmptySet" Duration="1" />
+    <TestDuration Test="SetUnion.EqualSetsReturnValidVal" Duration="1" />
+    <TestDuration Test="SetUnion.FirstSetEmptyReturnSecond" Duration="1" />
+    <TestDuration Test="SetUnion.SecondSetEmptyReturnFirst" Duration="1" />
+    <TestDuration Test="SetUnion.CommonElemsReturnValidVal" Duration="1" />
+  </TestDurations>
+</GtaTestDurations>
