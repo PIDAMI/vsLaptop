@@ -6,7 +6,6 @@ using namespace std;
 Set::Set(const string& _name) {
     size = 0;
     head = nullptr;
-    name = _name;
 }
 
 node::node() {
@@ -21,6 +20,13 @@ node::node(const string& str, node* nxt) {
     data = str;
     next = nxt;
 }
+
+node::node(const string& name, const Set& s){
+    data = name;
+    set = set;
+    next = nullptr;
+}
+
 
 
 
@@ -50,14 +56,24 @@ Set::~Set() {
     }
 }
 
+
 Set::Set() {
     head = nullptr;
     size = 0;
+    name = "unknown";
 }
 
-Set::Set(node* _head, size_t _size) {
+
+Set::Set(const string& n) {
+    head = nullptr;
+    size = 0;
+    name = n;
+}
+
+Set::Set(node* _head, size_t _size, const string& n) {
     head = _head;
     size = _size;
+    name = n;
 }
 
 Set::Set(vector <string> elems) {
@@ -82,7 +98,7 @@ bool Set::Check(const string& data) {
 
 }
 
-int Set::Add(const string& data ) {
+int Set::Add(const string& data) {
     if ((this->Check(data))) {
         string message = data + " is already in the set";
         throw invalid_argument(message.c_str());

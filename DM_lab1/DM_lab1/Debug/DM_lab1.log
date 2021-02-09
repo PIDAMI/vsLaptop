@@ -1,2 +1,31 @@
 ﻿  main.cpp
-  DM_lab1.vcxproj -> D:\79088\Documents\GitHub\vsLaptop\DM_lab1\Debug\DM_lab1.exe
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,8): error C2143: синтаксическая ошибка: отсутствие ";" перед "*"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,8): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,13): error C2238: непредвиденные лексемы перед ";"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(22,9): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(22,44): error C2143: синтаксическая ошибка: отсутствие "," перед "&"
+  Set.cpp
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,8): error C2143: синтаксическая ошибка: отсутствие ";" перед "*"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,8): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,13): error C2238: непредвиденные лексемы перед ";"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(22,9): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(22,44): error C2143: синтаксическая ошибка: отсутствие "," перед "&"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.cpp(24,45): error C2511: node::node(const std::string &,const Set &): перегруженная функция-член не найдена в "node"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(15): message : см. объявление "node"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.cpp(25,5): error C2597: недопустимая ссылка на нестатический член "node::data"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(16): message : см. объявление "node::data"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.cpp(26,5): error C2065: set: необъявленный идентификатор
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.cpp(26,11): error C2065: set: необъявленный идентификатор
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.cpp(27,5): error C2597: недопустимая ссылка на нестатический член "node::next"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(17): message : см. объявление "node::next"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.cpp(91,43): error C2572: Set::Add: переопределение аргумента по умолчанию: параметр 1
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(45): message : см. объявление "Set::Add"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.cpp(100,19): error C2039: "set": не является членом "node".
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(15): message : см. объявление "node"
+  Set_Operations.cpp
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,8): error C2143: синтаксическая ошибка: отсутствие ";" перед "*"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,8): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,13): error C2238: непредвиденные лексемы перед ";"
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(22,9): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(22,44): error C2143: синтаксическая ошибка: отсутствие "," перед "&"
+  Создание кода...

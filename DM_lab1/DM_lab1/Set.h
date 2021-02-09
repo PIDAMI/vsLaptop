@@ -18,7 +18,7 @@ struct node {
     node();
     node(const std::string& data);
     node(const std::string& data, node* next);
-
+    node(const std::string& name);
 };
 
 
@@ -30,13 +30,14 @@ void Append(node** head, node** tail, std::string new_data);
 class Set
 {
 private:
-    std::string name = "unknown";
+    std::string name;
     size_t size;
     node* head;
     node* Find(const std::string& data);
 public:
     Set();
-    Set(node* _head, size_t _size);
+    Set(const std::string& n);
+    Set(node* _head, size_t _size, const std::string& n);
     Set(std::vector <std::string> elems);
     Set(const std::string& name);
     ~Set();
@@ -56,13 +57,7 @@ public:
 };
 
 //todo: class of all classes
-//class SetOfSets : public Set
-//{
-//    private:
-//     
-//public:
-//
-//};
+
 
 
 #endif // !SET

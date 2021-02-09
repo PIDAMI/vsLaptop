@@ -35,8 +35,8 @@ void Help(string command) {
 
 int main()
 {
-	Set z;
-	z.Add("w");
+	Set main;
+
 
 
 	return 0;
