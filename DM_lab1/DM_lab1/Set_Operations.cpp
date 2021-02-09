@@ -19,7 +19,6 @@ node* merge_lists(node* a, node* b, size_t& resulting_size) {
 	node* b_i = b;
 	string nxt_data;
 	size_t count = 0;
-	node* nxt_node;
 	while (a_i && b_i) {
 		if (a_i->data < b_i->data) {
 			nxt_data = a_i->data;

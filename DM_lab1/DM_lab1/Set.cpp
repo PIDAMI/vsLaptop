@@ -3,10 +3,6 @@ using namespace std;
 
 
 
-Set::Set(const string& _name) {
-    size = 0;
-    head = nullptr;
-}
 
 node::node() {
     data = "";
@@ -21,11 +17,6 @@ node::node(const string& str, node* nxt) {
     next = nxt;
 }
 
-node::node(const string& name, const Set& s){
-    data = name;
-    set = set;
-    next = nullptr;
-}
 
 
 
@@ -70,10 +61,10 @@ Set::Set(const string& n) {
     name = n;
 }
 
-Set::Set(node* _head, size_t _size, const string& n) {
+Set::Set(node* _head, size_t _size) {
     head = _head;
     size = _size;
-    name = n;
+    name = "unknown";
 }
 
 Set::Set(vector <string> elems) {
@@ -81,6 +72,7 @@ Set::Set(vector <string> elems) {
     for (const auto& item : elems) {
         this->Add(item);
     }
+    name = "unknown";
 }
 
 
@@ -88,6 +80,10 @@ size_t Set::Power() const {
     return size;
 }
 
+// add check for existance of sets with similiar name
+void Set::ChangeName(const string& new_name) {
+    name = new_name;
+}
 
 
 bool Set::Check(const string& data) {

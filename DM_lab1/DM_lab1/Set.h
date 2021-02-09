@@ -18,7 +18,6 @@ struct node {
     node();
     node(const std::string& data);
     node(const std::string& data, node* next);
-    node(const std::string& name);
 };
 
 
@@ -37,9 +36,9 @@ private:
 public:
     Set();
     Set(const std::string& n);
-    Set(node* _head, size_t _size, const std::string& n);
+    Set(node* _head, size_t _size);
+    void ChangeName(const std::string& new_name);
     Set(std::vector <std::string> elems);
-    Set(const std::string& name);
     ~Set();
     size_t Power() const;
     bool Check(const std::string& data);

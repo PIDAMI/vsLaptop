@@ -1,7 +1,1 @@
-﻿  pch.cpp
-  test.cpp
-D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,8): error C2143: синтаксическая ошибка: отсутствие ";" перед "*"
-D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,8): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
-D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(18,13): error C2238: непредвиденные лексемы перед ";"
-D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(22,9): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
-D:\79088\Documents\GitHub\vsLaptop\DM_lab1\DM_lab1\Set.h(22,44): error C2143: синтаксическая ошибка: отсутствие "," перед "&"
+﻿  Set_test.vcxproj -> D:\79088\Documents\GitHub\vsLaptop\DM_lab1\Debug\Set_test.exe
