@@ -4,11 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <type_traits>
 #include <string>
 #include <sstream>
 #include <vector>
-
-#include <tuple>
 //#include <algorithm>
 
 template <typename T>
@@ -27,25 +26,26 @@ void Append(node<std::string>** head, node<std::string>** tail, std::string new_
 template <typename T>
 class Set
 {
-private:
+private:    
     std::string name;
     size_t size;
     node<T>* head;
     node<T>* Find(const T& data);
 public:
+    
+
     Set();
     Set(const std::string& n);
     Set(node<T>* _head, size_t _size);
-    
     Set(std::vector <std::string> elems);
     ~Set();
     void ChangeName(const std::string& new_name);
-    size_t Power() const;
+    size_t Power() const ;
     std::string Name() const;
-    T& FindByName(const std::string& n);
+    T* FindByName(const std::string& n);//exceptions
     bool Check(const T& data);
-    int Add(const T& data);//exc
-    int Del(const T& data);//exc
+    int Add(const T& data);//exceptions
+    int Del(const T& data);//exceptions
     Set Union(const Set& b);
     bool Includes(const Set& b);
     Set Intersection(const Set& b);
@@ -103,18 +103,50 @@ node<T>* Set<T>::Find(const T& data) {
     return nullptr;
 }
 
-template <typename T>
-Set<T>::~Set() {
-    node<T>* tmp = head;
+//template <typename T>
+//Set<T>::~Set() {
+//    node<T>* tmp = head;
+//    cout << name << endl;
+//    if (size) {
+//        while (head) {
+//            tmp = tmp->next;
+//            delete head;
+//            
+//            head = tmp;
+//            size--;
+//        }
+//    }
+//}
+
+Set<std::string>::~Set() {
+    node<std::string>* tmp = head;
+    cout << name << endl;
     if (size) {
         while (head) {
             tmp = tmp->next;
-            delete head;
+            if (head->data.size())
+                delete head;
             head = tmp;
             size--;
         }
     }
 }
+
+Set<Set<string>>::~Set() {
+    node<Set<string>>* tmp = head;
+    cout << name << endl;
+    if (size) {
+        while (head) {
+            tmp = tmp->next;
+            if (head->data.Power())
+                delete head;
+
+            head = tmp;
+            size--;
+        }
+    }
+}
+
 
 template <typename T>
 Set<T>::Set() {
@@ -145,24 +177,27 @@ Set<string>::Set(vector <string> elems) {
     name = "unknown";
 }
 
+
+
 template <typename T>
-T& Set<T>::FindByName(const string& n) {
+T* Set<T>::FindByName(const string& n) {
     node<T>* set = Find({ n });
     if (!set) {
         string message = "No set named " + n;
         throw invalid_argument(message.c_str());
     }
-    return set->data;
+    return &(set->data);
 }
 
 
-
-size_t Set<string>::Power() const {
+template <typename T>
+size_t Set<T>::Power() const {
     return size;
 }
 
 // add check for existance of sets with similiar name
-void Set<string>::ChangeName(const string& new_name) {
+template <typename T>
+void Set<T>::ChangeName(const string& new_name) {
     name = new_name;
 }
 
@@ -244,17 +279,17 @@ void Set<string>::Print() {
 
 template <typename T>
 bool operator<(const Set<T>& lhs, const Set<T>& rhs) {
-    return lhs.name < rhs.name;
+    return lhs.Name() < rhs.Name();
 }
 
 template <typename T>
 bool operator>(const Set<T>& lhs, const Set<T>& rhs) {
-    return lhs.name > rhs.name;
+    return lhs.Name() > rhs.Name();
 }
 
 template <typename T>
 bool operator==(const Set<T>& lhs, const Set<T>& rhs) {
-    return lhs.name == rhs.name;
+    return lhs.Name() == rhs.Name();
 }
 
 

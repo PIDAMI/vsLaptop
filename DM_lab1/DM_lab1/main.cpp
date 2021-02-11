@@ -37,30 +37,33 @@ public:
 
 };
 
+
+
 int main()
 {
-	tmp a;
-	cout << a.AtDouble();
-
-
-
-	//Set<Set<string>> main;
-	//
-	//Set<string> a("first");
-	//Set<string> k("second");
-	//a.Add("abc");
-	//a.Add("zxc");
-	//k.Add("lol");
 
 
 
 
-	//main.Add(a);
-	//if (main.Check(a))
-	//	cout << "a in main";
-	//cout << main.FindByName("first")->Power();
+	
+	
 
+	Set<Set<string>> main;
+	main.ChangeName("main");
+	main.Add({ "first" });
+	main.FindByName("first")->ChangeName("second");
+	main.FindByName("second")->Add("zxc");
+	cout << main.FindByName("second")->Power();
+	
+	cout << endl;
 
+	
+	//main.FindByName("first");
+	//main.FindByName("first").Add("lol");
+	/*if (main.Check(a))
+		cout << "a in main";*/
+
+	return 0;
 	/*
 	Set valid_commands({"create","clear","delete","check","power", "add",
 						"help", "union", "intersection", "includes",
