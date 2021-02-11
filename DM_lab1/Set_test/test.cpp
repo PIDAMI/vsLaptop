@@ -4,14 +4,14 @@
 
 
 TEST(SetAdd, AddFirstElem) {
-	Set s;
+	Set<std::string> s;
 	EXPECT_EQ(s.Add("qwe"), 1);
 
 }
 
 
 TEST(SetAdd, AddToEnd) {
-	Set s;
+	Set<std::string> s;
 	s.Add("abc");
 	s.Add("bcd");
 	int pos = 3;
@@ -19,7 +19,7 @@ TEST(SetAdd, AddToEnd) {
 
 }
 TEST(SetAdd, AddInMiddle) {
-	Set s;
+	Set<std::string> s;
 	int head_pos = s.Add("abc");
 	int tail_pos = s.Add("zzz");
 	int pos = s.Add("bcd");
@@ -29,7 +29,7 @@ TEST(SetAdd, AddInMiddle) {
 
 
 TEST(SetDel, DelLastElemReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 	s.Add("abc");
 	s.Add("bcd");
 	int old_power = s.Power();
@@ -40,7 +40,7 @@ TEST(SetDel, DelLastElemReturnValidVal) {
 	EXPECT_EQ(new_power, old_power - 1);
 }
 TEST(SetDel, DelMidElemReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 	s.Add("abc");
 	s.Add("bcd");
 	s.Add("zxc");
@@ -54,7 +54,7 @@ TEST(SetDel, DelMidElemReturnValidVal) {
 }
 
 TEST(SetDel, DelHeadReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 	s.Add("abc");
 	s.Add("bcd");
 	int old_power = s.Power();
@@ -68,7 +68,7 @@ TEST(SetDel, DelHeadReturnValidVal) {
 }
 
 TEST(SetDel, DelOnlyElemValidVal) {
-	Set s;
+	Set<std::string> s;
 	s.Add("abc");
 	int result = s.Del("abc");
 	int new_power = s.Power();
@@ -81,12 +81,12 @@ TEST(SetDel, DelOnlyElemValidVal) {
 
 
 TEST(SetPower, EmptySetReturnZero) {
-	Set s;
+	Set<std::string> s;
 	EXPECT_EQ(0, s.Power());
 }
 
 TEST(SetPower, NonEmptySetReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 	s.Add("qwe");
 	s.Add("abc");
 	int size = 2;
@@ -94,16 +94,16 @@ TEST(SetPower, NonEmptySetReturnValidVal) {
 }
 
 TEST(SetIncludes, NoCommonElementsReturnFalse) {
-	Set s;
+	Set<std::string> s;
 	s.Add("asd");
 	s.Add("bcd");
-	Set q;
+	Set<std::string> q;
 	q.Add("zxc");
 	EXPECT_FALSE(s.Includes(q));
 }
 
 TEST(SetIncludes, IncludeItselfReturnTrue) {
-	Set s;
+	Set<std::string> s;
 	s.Add("asd");
 	s.Add("bcd");
 	s.Add("zxc");
@@ -112,30 +112,30 @@ TEST(SetIncludes, IncludeItselfReturnTrue) {
 }
 
 TEST(SetIncludes, EmptySetAsParamReturnTrue) {
-	Set s;
+	Set<std::string> s;
 	s.Add("asd");
 	s.Add("bcd");
-	Set q;
+	Set<std::string> q;
 	EXPECT_TRUE(s.Includes(q));
 }
 TEST(SetIncludes, BothEmptySetsReturnTrue) {
-	Set s;
-	Set q;
+	Set<std::string> s;
+	Set<std::string> q;
 	EXPECT_TRUE(s.Includes(q));
 }
 TEST(SetIncludes, MainSetEmptyReturnFalse) {
-	Set s;
-	Set q;
+	Set<std::string> s;
+	Set<std::string> q;
 	q.Add("asd");
 	EXPECT_FALSE(s.Includes(q));
 }
 
 TEST(SetIncludes, EqualPowerAndHaveSomeCommonElemsReturnFalse) {
-	Set s;
+	Set<std::string> s;
 	s.Add("abc");
 	s.Add("xdd");
 	
-	Set q;
+	Set<std::string> q;
 	q.Add("asd");
 	q.Add("wes");
 
@@ -143,11 +143,11 @@ TEST(SetIncludes, EqualPowerAndHaveSomeCommonElemsReturnFalse) {
 }
 
 TEST(SetIncludes, SecondSetBiggerReturnFalse) {
-	Set s;
+	Set<std::string> s;
 	s.Add("abc");
 	s.Add("xdd");
 
-	Set q;
+	Set<std::string> q;
 	q.Add("asd");
 	q.Add("wes");
 	q.Add("ccx");
@@ -155,21 +155,21 @@ TEST(SetIncludes, SecondSetBiggerReturnFalse) {
 }
 
 TEST(SetIncludes, IncludesReturnTrue) {
-	Set s;
+	Set<std::string> s;
 	s.Add("abc");
 	s.Add("xdd");
 	s.Add("zxc");
-	Set q;
+	Set<std::string> q;
 	q.Add("abc");
 	EXPECT_TRUE(s.Includes(q));
 }
 
 TEST(SetIncludes, EqualSetsReturnTrue) {
-	Set s;
+	Set<std::string> s;
 	s.Add("xdd");
 	s.Add("abc");
 	s.Add("zxc");
-	Set q;
+	Set<std::string> q;
 	q.Add("abc");
 	q.Add("zxc");
 	q.Add("xdd");
@@ -180,32 +180,32 @@ TEST(SetIncludes, EqualSetsReturnTrue) {
 
 
 TEST(SetUnion, EmptySetsReturnEmptySet) {
-	Set s;
-	Set q;
-	Set result = s.Union(q);
+	Set<std::string> s;
+	Set<std::string> q;
+	Set<std::string> result = s.Union(q);
 	EXPECT_EQ(result.Power(),0);
 }
 
 TEST(SetUnion, UnionItselfReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 
 	s.Add("xdd");
 	s.Add("abc");
 	s.Add("zxc");
-	Set result = s.Union(s);
+	Set<std::string> result = s.Union(s);
 	EXPECT_EQ(result.Power(), s.Power());
 	EXPECT_TRUE(result.Includes(s));
 	EXPECT_TRUE(s.Includes(result));
 }
 
 TEST(SetUnion, FirstSetEmptyReturnSecond) {
-	Set s;
-	Set q;
+	Set<std::string> s;
+	Set<std::string> q;
 	q.Add("bcv");
 	q.Add("asd");
 
 
-	Set result = s.Union(q);
+	Set<std::string> result = s.Union(q);
 	EXPECT_EQ(result.Power(), q.Power());
 	EXPECT_TRUE(result.Includes(q));
 	EXPECT_TRUE(q.Includes(result));
@@ -213,13 +213,13 @@ TEST(SetUnion, FirstSetEmptyReturnSecond) {
 
 
 TEST(SetUnion, SecondSetEmptyReturnFirst) {
-	Set s;
-	Set q;
+	Set<std::string> s;
+	Set<std::string> q;
 	s.Add("bcv");
 	s.Add("asd");
 
 
-	Set result = s.Union(q);
+	Set<std::string> result = s.Union(q);
 	EXPECT_EQ(result.Power(), s.Power());
 	EXPECT_TRUE(result.Includes(s));
 	EXPECT_TRUE(s.Includes(result));
@@ -227,15 +227,15 @@ TEST(SetUnion, SecondSetEmptyReturnFirst) {
 }
 
 TEST(SetUnion, EqualSetsReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 
 	s.Add("bcv");
 	s.Add("asd");
-	Set q;
+	Set<std::string> q;
 	q.Add("bcv");
 	q.Add("asd");
 
-	Set result = s.Union(q);
+	Set<std::string> result = s.Union(q);
 	EXPECT_EQ(result.Power(), s.Power());
 
 	EXPECT_TRUE(result.Includes(q));
@@ -247,16 +247,16 @@ TEST(SetUnion, EqualSetsReturnValidVal) {
 }
 
 TEST(SetUnion, CommonElemsReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 
 	s.Add("bcv");
 	s.Add("asd");
-	Set q;
+	Set<std::string> q;
 	q.Add("asd");
 	q.Add("ok");
 	q.Add("wwe");
 
-	Set result = s.Union(q);
+	Set<std::string> result = s.Union(q);
 	EXPECT_EQ(result.Power(), s.Power()+q.Power()-1);
 
 	EXPECT_TRUE(result.Includes(q));
@@ -266,18 +266,18 @@ TEST(SetUnion, CommonElemsReturnValidVal) {
 }
 
 TEST(SetIntersection, EmptySetsReturnEmpty) {
-	Set s;
-	Set q;
-	Set result = s.Intersection(q);
+	Set<std::string> s;
+	Set<std::string> q;
+	Set<std::string> result = s.Intersection(q);
 	EXPECT_EQ(result.Power(), 0);
 }
 
 TEST(SetIntersection, IntersectItselfReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 
 	s.Add("bcv");
 	s.Add("asd");
-	Set result = s.Intersection(s);
+	Set<std::string> result = s.Intersection(s);
 	EXPECT_EQ(result.Power(), s.Power());
 	EXPECT_TRUE(result.Includes(s));
 
@@ -286,22 +286,22 @@ TEST(SetIntersection, IntersectItselfReturnValidVal) {
 
 
 TEST(SetIntersection, MainSetEmptyReturnEmpty) {
-	Set s;
-	Set q;
+	Set<std::string> s;
+	Set<std::string> q;
 	q.Add("asd");
 	q.Add("bcd");
-	Set result = s.Intersection(q);
+	Set<std::string> result = s.Intersection(q);
 	EXPECT_EQ(result.Power(), 0);
 	EXPECT_FALSE(result.Check("asd"));
 	EXPECT_FALSE(result.Check("bcd"));
 }
 
 TEST(SetIntersection, SecondSetEmptyReturnEmpty) {
-	Set s;
-	Set q;
+	Set<std::string> s;
+	Set<std::string> q;
 	s.Add("asd");
 	s.Add("bcd");
-	Set result = s.Intersection(q);
+	Set<std::string> result = s.Intersection(q);
 	EXPECT_EQ(result.Power(), 0);
 	EXPECT_FALSE(result.Check("asd"));
 	EXPECT_FALSE(result.Check("bcd"));
@@ -309,17 +309,17 @@ TEST(SetIntersection, SecondSetEmptyReturnEmpty) {
 
 
 TEST(SetIntersection, HaveCommonElemsReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 	s.Add("asd");//
 	s.Add("bcd");
 	s.Add("zxc");//
 	s.Add("ttt");
-	Set q;
+	Set<std::string> q;
 	q.Add("asd");//
 	q.Add("zxc");//
 	q.Add("qwe");
 	q.Add("rty");
-	Set result = s.Intersection(q);
+	Set<std::string> result = s.Intersection(q);
 	EXPECT_EQ(result.Power(), 2);
 	EXPECT_TRUE(result.Check("asd"));
 	EXPECT_TRUE(result.Check("zxc"));
@@ -327,19 +327,19 @@ TEST(SetIntersection, HaveCommonElemsReturnValidVal) {
 }
 
 TEST(SetSubtract, BothEmptyReturnEmpty) {
-	Set s;
-	Set q;
-	Set result = s.Subtract(q);
+	Set<std::string> s;
+	Set<std::string> q;
+	Set<std::string> result = s.Subtract(q);
 	EXPECT_EQ(s.Power(), 0);
 
 
 }
 TEST(SetSubtract, MainSetEmptyReturnEmpty) {
-	Set s;
-	Set q;
+	Set<std::string> s;
+	Set<std::string> q;
 	q.Add("qwe");
 	q.Add("asd");
-	Set result = s.Subtract(q);
+	Set<std::string> result = s.Subtract(q);
 	EXPECT_EQ(result.Power(), 0);
 	EXPECT_FALSE(result.Check("qwe"));
 	EXPECT_FALSE(result.Check("asd"));
@@ -347,11 +347,11 @@ TEST(SetSubtract, MainSetEmptyReturnEmpty) {
 }
 
 TEST(SetSubtract, SecondSetEmptyReturnFirstSet) {
-	Set s;
+	Set<std::string> s;
 	s.Add("qwe");
 	s.Add("asd");
-	Set q;
-	Set result = s.Subtract(q);
+	Set<std::string> q;
+	Set<std::string> result = s.Subtract(q);
 	EXPECT_EQ(result.Power(), s.Power());
 	EXPECT_TRUE(result.Check("qwe"));
 	EXPECT_TRUE(result.Check("asd"));
@@ -360,31 +360,31 @@ TEST(SetSubtract, SecondSetEmptyReturnFirstSet) {
 
 
 TEST(SetSubtract, SubtractItselfReturnEmpty) {
-	Set s;
+	Set<std::string> s;
 	s.Add("qwe");
 	s.Add("asd");
 	s.Add("zxc");
 	s.Add("ddw");
 
-	Set result = s.Subtract(s);
+	Set<std::string> result = s.Subtract(s);
 	EXPECT_EQ(result.Power(), 0);
 }
 
 TEST(SetSubtract, SomeCommonElemsfReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 	s.Add("qwe");
 	s.Add("asd");//
 	s.Add("zxc");
 	s.Add("ddw");//
 
-	Set q;
+	Set<std::string> q;
 	q.Add("ddw");//
 	q.Add("asd");//
 	q.Add("mnv");
 	q.Add("yuu");
 
 
-	Set result = s.Subtract(q);
+	Set<std::string> result = s.Subtract(q);
 	EXPECT_EQ(result.Power(), s.Power()-s.Intersection(q).Power());
 	EXPECT_FALSE(result.Check("asd"));
 	EXPECT_FALSE(result.Check("ddw"));
@@ -392,21 +392,21 @@ TEST(SetSubtract, SomeCommonElemsfReturnValidVal) {
 }
 
 TEST(SetXOR, EmptySetsReturnEmpty) {
-	Set s;
-	Set q;
-	Set result = s.XOR(q);
+	Set<std::string> s;
+	Set<std::string> q;
+	Set<std::string> result = s.XOR(q);
 	EXPECT_EQ(result.Power(), 0);
 
 }
 
 
 TEST(SetXOR, OneSetEmptyReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 	s.Add("qwe");
 	s.Add("asd");
 	s.Add("zxc");
-	Set q;
-	Set result = s.XOR(q);
+	Set<std::string> q;
+	Set<std::string> result = s.XOR(q);
 	EXPECT_EQ(result.Power(), s.Power());
 
 	EXPECT_TRUE(result.Includes(s));
@@ -415,11 +415,11 @@ TEST(SetXOR, OneSetEmptyReturnValidVal) {
 }
 
 TEST(SetXOR, XORItselfReturnEmpty) {
-	Set s;
+	Set<std::string> s;
 	s.Add("qwe");
 	s.Add("asd");
 	s.Add("zxc");
-	Set result = s.XOR(s);
+	Set<std::string> result = s.XOR(s);
 	EXPECT_EQ(result.Power(), 0);
 	EXPECT_FALSE(result.Includes(s));
 
@@ -427,15 +427,15 @@ TEST(SetXOR, XORItselfReturnEmpty) {
 
 
 TEST(SetXOR, NoCommonElemsReturnUnion) {
-	Set s;
+	Set<std::string> s;
 	s.Add("qwe");
 	s.Add("asd");
 	s.Add("zxc");
-	Set q;
+	Set<std::string> q;
 	q.Add("ghj");
 	q.Add("llk");
-	Set result = s.XOR(q);
-	Set _union;
+	Set<std::string> result = s.XOR(q);
+	Set<std::string> _union;
 	_union.Add("qwe");
 	_union.Add("asd");
 	_union.Add("zxc");
@@ -449,18 +449,18 @@ TEST(SetXOR, NoCommonElemsReturnUnion) {
 }
 
 TEST(SetXOR, SomeCommonElemsReturnValidVal) {
-	Set s;
+	Set<std::string> s;
 	s.Add("qwe");
 	s.Add("asd");//
 	s.Add("zxc");
-	Set q;
+	Set<std::string> q;
 	q.Add("ghj");
 	q.Add("asd");//
-	Set xor;
+	Set<std::string> xor;
 	xor.Add("qwe");
 	xor.Add("zxc");
 	xor.Add("ghj");
-	Set result = s.XOR(q);
+	Set<std::string> result = s.XOR(q);
 	EXPECT_EQ(result.Power(), xor .Power());
 	EXPECT_FALSE(result.Check("asd"));
 	EXPECT_TRUE(result.Includes(xor));

@@ -1,16 +1,6 @@
 ﻿#include "Set.h"
 using namespace std;
 
-class qwe {
-public:
-	qwe() { k = 1; }
-	int ke() { return k; }
-private:
-	int k;
-};
-
-
-
 
 
 
@@ -33,13 +23,45 @@ void Help(string command) {
 	}
 }
 
+
+class tmp {
+private:
+	int kek;
+	double lul;
+public:
+	int& AtKek() {
+		return kek;
+	};
+	double& AtDouble() { return lul; };
+	tmp() { kek = 0; lul = 0; };
+
+};
+
 int main()
 {
-	Set main;
+	tmp a;
+	cout << a.AtDouble();
 
 
 
-	return 0;
+	//Set<Set<string>> main;
+	//
+	//Set<string> a("first");
+	//Set<string> k("second");
+	//a.Add("abc");
+	//a.Add("zxc");
+	//k.Add("lol");
+
+
+
+
+	//main.Add(a);
+	//if (main.Check(a))
+	//	cout << "a in main";
+	//cout << main.FindByName("first")->Power();
+
+
+	/*
 	Set valid_commands({"create","clear","delete","check","power", "add",
 						"help", "union", "intersection", "includes",
 						"xor", "diff", "print", "list"});
@@ -61,7 +83,7 @@ int main()
 	
 
 
-	return 0;
+	return 0;*/
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
