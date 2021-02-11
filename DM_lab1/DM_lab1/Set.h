@@ -6,8 +6,10 @@
 #include <stdexcept>
 #include <string>
 #include <sstream>
-//#include <algorithm>
+#include <vector>
 
+#include <tuple>
+//#include <algorithm>
 
 
 struct node {
@@ -16,20 +18,27 @@ struct node {
     node();
     node(const std::string& data);
     node(const std::string& data, node* next);
-
 };
 
+
+
+
 node* merge_lists(node* a, node* b, size_t& resulting_size);
+void Append(node** head, node** tail, std::string new_data);
 
 class Set
 {
 private:
+    std::string name;
     size_t size;
     node* head;
     node* Find(const std::string& data);
 public:
     Set();
+    Set(const std::string& n);
     Set(node* _head, size_t _size);
+    void ChangeName(const std::string& new_name);
+    Set(std::vector <std::string> elems);
     ~Set();
     size_t Power() const;
     bool Check(const std::string& data);
@@ -38,12 +47,15 @@ public:
     Set Union(const Set& b);
     bool Includes(const Set& b);
     Set Intersection(const Set& b);
-    node* Head();
+    //node* Head();
+    Set Subtract(const Set& b);
+    Set XOR(const Set& b);
 
 
     void Print();
 };
 
+//todo: class of all classes
 
 
 

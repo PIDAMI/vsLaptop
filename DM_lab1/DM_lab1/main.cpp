@@ -14,35 +14,51 @@ private:
 
 
 
+void Help(string command) {
+	if (command == "create") {
+		cout << "create <set>\nCreates an empty set named <set>.\n"
+			"Creating a s.";
+	}
+	else if (command == "clear") {
+		cout << "clear <set>\nDeletes the set named <set>.\n"
+			"To use a set with the same name later on, make a new one with the command 'create'.\n"
+			"An attempt to delete non-existing set will cause an error message.";
+	}
+	else if (command == "delete") {
+		cout << "delete <set> <element>\nDeletes an element named <element>"
+			"from the <set>.\nAn attempt to delete non-existing element will cause an error message.";
+	}
+	else if (command == "check") {
+		cout << "check <set> <element>\n";
+	}
+}
+
 int main()
 {
-	Set s;
-	//cout << 
-	s.Add("abc");
-	//	<< endl;
-	//cout << 
-	s.Add("ccp");
-	//	<< endl;
-	//cout << 
-	s.Add("bcd");
-	//	<< endl;
-//	s.Print();
-	cout << endl;
+	Set main;
 
-	Set q;
-	q.Add("ccp");
-	q.Add("doll");
-	q.Add("zzz");
-//	q.Print();
-	s.Union(q).Print();
+
+
+	return 0;
+	Set valid_commands({"create","clear","delete","check","power", "add",
+						"help", "union", "intersection", "includes",
+						"xor", "diff", "print", "list"});
 	
 
+	string input, i;
+	cout << "Enter the commands: ";
+	getline(cin, input);
+	stringstream s(input);
+	string action;
+	s >> action;
+	if (valid_commands.Check(action)) {
+
+	}
+
 	
 
 	
 	
-
-	//make_tuple(b, a) = merge_lists(q.Head(), s.Head());
 
 
 	return 0;

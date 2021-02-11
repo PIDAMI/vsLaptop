@@ -31,5 +31,22 @@
     <TestDuration Test="SetUnion.FirstSetEmptyReturnSecond" Duration="1" />
     <TestDuration Test="SetUnion.SecondSetEmptyReturnFirst" Duration="1" />
     <TestDuration Test="SetUnion.CommonElemsReturnValidVal" Duration="1" />
+    <TestDuration Test="SetIntersection.EmptySetsReturnEmpty" Duration="1" />
+    <TestDuration Test="SetIntersection.MainSetEmptyReturnEmpty" Duration="1" />
+    <TestDuration Test="SetIntersection.SecondSetEmptyReturnEmpty" Duration="1" />
+    <TestDuration Test="SetIntersection.HaveCommonElemsReturnValidVal" Duration="1" />
+    <TestDuration Test="SetSubtract.BothEmptyReturnEmpty" Duration="1" />
+    <TestDuration Test="SetSubtract.MainSetEmptyReturnEmpty" Duration="1" />
+    <TestDuration Test="SetSubtract.SecondSetEmptyReturnFirstSet" Duration="1" />
+    <TestDuration Test="SetSubtract.SubtractItselfReturnEmpty" Duration="1" />
+    <TestDuration Test="SetSubtract.SomeCommonElemsfReturnValidVal" Duration="1" />
+    <TestDuration Test="SetIncludes.IncludeItselfReturnTrue" Duration="1" />
+    <TestDuration Test="SetUnion.UnionItselfReturnValidVal" Duration="1" />
+    <TestDuration Test="SetIntersection.IntersectItselfReturnValidVal" Duration="1" />
+    <TestDuration Test="SetXOR.EmptySetsReturnEmpty" Duration="1" />
+    <TestDuration Test="SetXOR.OneSetEmptyReturnValidVal" Duration="1" />
+    <TestDuration Test="SetXOR.XORItselfReturnEmpty" Duration="1" />
+    <TestDuration Test="SetXOR.NoCommonElemsReturnUnion" Duration="1" />
+    <TestDuration Test="SetXOR.SomeCommonElemsReturnValidVal" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

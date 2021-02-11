@@ -19,7 +19,6 @@ node* merge_lists(node* a, node* b, size_t& resulting_size) {
 	node* b_i = b;
 	string nxt_data;
 	size_t count = 0;
-	node* nxt_node;
 	while (a_i && b_i) {
 		if (a_i->data < b_i->data) {
 			nxt_data = a_i->data;
@@ -34,16 +33,7 @@ node* merge_lists(node* a, node* b, size_t& resulting_size) {
 			b_i = b_i->next;
 			a_i = a_i->next;
 		}
-		/*nxt_node = new node;
-		nxt_node->next = nullptr;
-		nxt_node->data = nxt_data;
-		if (!res_head) {
-			res_head = nxt_node;
-		}
-		else {
-			res_tail->next = nxt_node;
-		}
-		res_tail = nxt_node;*/
+
 		Append(&res_head, &res_tail, nxt_data);
 
 		count++;
@@ -52,16 +42,7 @@ node* merge_lists(node* a, node* b, size_t& resulting_size) {
 	
 	node* left_set = (a_i == nullptr ? b_i : a_i);
 	while (left_set) {
-		/*nxt_node = new node;
-		nxt_node->next = nullptr;
-		nxt_node->data = left_set->data;
-		if (!res_head) {
-			res_head = nxt_node;
-		}
-		else{
-			res_tail->next = nxt_node;
-		}
-		res_tail = nxt_node;*/
+
 		Append(&res_head, &res_tail, left_set->data);
 		left_set = left_set->next;
 		count++;
@@ -72,124 +53,124 @@ node* merge_lists(node* a, node* b, size_t& resulting_size) {
 }
 
 
-
-/*
-#include "Set.h"
-using namespace std;
-
-
-
-Set Union(Set a, Set b) {
-	node* res_head = nullptr;
-	node* res_tail = nullptr;
-	node* a_i = a.Head();
-	node* b_i = b.Head();
-	string nxt_data;
-	size_t count = 0;
-	while (a_i && b_i) {
-		if (a_i->data < b_i->data) {
-			nxt_data = a_i->data;
-			a_i = a_i->next;
-		}
-		else if (a_i->data > b_i->data) {
-			nxt_data = b_i->data;
-			b_i = b_i->next;
-		}
-		else {
-			nxt_data = a_i->data;
-			b_i = b_i->next;
-			a_i = a_i->next;
-		}
-		node* nxt_node = new node;
-		nxt_node->next = nullptr;
-		nxt_node->data = nxt_data;
-		if (!res_head) {
-			res_head = nxt_node;
-			res_head->next = res_tail;
-		}
-		else if (res_tail){
-			res_tail->next = nxt_node;
-		}
-		res_tail = nxt_node;
-		count++;
-		cout << nxt_data << endl;
-	}
-
-	node* left_set = (a_i == nullptr ? b_i : a_i);
-	while (left_set) {
-		node* nxt_node = new node;
-		nxt_node->next = nullptr;
-		nxt_node->data = left_set->data;
-		if (!res_head) {
-			res_head = nxt_node;
-			res_head->next = res_tail;
-		}
-		else if (res_tail){
-			res_tail->next = nxt_node;
-		}
-		res_tail = nxt_node;
-		left_set = left_set->next;
-		count++;
-		cout << nxt_node->data;
-	}
-	Set result((res_head ? res_head->next : nullptr), count);
-	return result;
+Set Set::Union(const Set& b) {
+	size_t union_power = 0;
+	node* union_head = merge_lists(head, b.head, union_power);
+	return { union_head, union_power };
 }
 
+bool Set::Includes(const Set& B) {
+	node* a = head;
+	node* b = B.head;
+	while (a && b) {
+		if (b->data < a->data) {
+			return false;
+		}
+		else if (b->data > a->data) {
+			a = a->next;
+		}
+		else {
+			a = a->next;
+			b = b->next;
+		}
 
-Set Set::Union(const Set& b){
-	node* res_head=nullptr;
-	node* res_tail=nullptr;
+	}
+
+	return (b == nullptr);
+}
+
+Set Set::Intersection(const Set& b) {
 	node* a_i = head;
 	node* b_i = b.head;
-	string nxt_data;
+	node* res_head = nullptr;
+	node* res_tail = nullptr;
 	size_t count = 0;
 	while (a_i && b_i) {
 		if (a_i->data < b_i->data) {
-			nxt_data = a_i->data;
 			a_i = a_i->next;
 		}
 		else if (a_i->data > b_i->data) {
-			nxt_data = b_i->data;
 			b_i = b_i->next;
 		}
 		else {
-			nxt_data = a_i->data;
+			Append(&res_head, &res_tail, a_i->data);
+			a_i = a_i->next;
+			b_i = b_i->next;
+			count++;
+		}
+	}
+	return { res_head,count };
+}
+
+Set Set::Subtract(const Set& b) {
+	node* a_i = head;
+	node* b_i = b.head;
+	node* res_head = nullptr;
+	node* res_tail = nullptr;
+	string new_data;
+	size_t count = 0;
+	while (a_i && b_i) {
+		if (b_i->data < a_i->data) {
+			b_i = b_i->next;
+		}
+		else if (b_i->data > a_i->data) {
+			Append(&res_head, &res_tail, a_i->data);
+			a_i = a_i->next;
+			count++;
+		}
+		else {
+			a_i = a_i->next;
+			b_i = b_i->next;
+		}
+
+	}
+	if (a_i) {
+		while (a_i) {
+			Append(&res_head, &res_tail, a_i->data);
+			a_i = a_i->next;
+			count++;
+		}
+	}
+	return { res_head,count };
+}
+
+Set Set::XOR(const Set& b) {
+	node* a_i = head;
+	node* b_i = b.head;
+	node* res_head = nullptr;
+	node* res_tail = nullptr;
+	string new_data;
+	size_t count = 0;
+	while (a_i && b_i) {
+		if (a_i->data != b_i->data) {
+			if (a_i->data < b_i->data) {
+				new_data = a_i->data;
+				a_i = a_i->next;
+			}
+			else {
+				new_data = b_i->data;
+				b_i = b_i->next;
+
+			}
+			Append(&res_head, &res_tail, new_data);
+			count++;
+		}
+		else {
 			b_i = b_i->next;
 			a_i = a_i->next;
 		}
-		node* nxt_node = new node;
-		nxt_node->next = nullptr;
-		nxt_node->data = nxt_data;
-		if (!res_head) {
-			res_head = nxt_node;
-		}
-		else {
-			res_tail->next = nxt_node;
-		}
-		res_tail = nxt_node;
-		count++;
+		
 	}
-
-	node* left_set = (a_i == nullptr? b_i : a_i);
+	node* left_set = (a_i == nullptr ? b_i : a_i);
 	while (left_set) {
-		node* nxt_node = new node;
-		nxt_node->next = nullptr;
-		nxt_node->data = left_set->data;
-		if (!res_head) {
-			res_head = nxt_node;
-		}
-		else {
-			res_tail->next = nxt_node;
-		}
-		res_tail = nxt_node;
+
+		Append(&res_head, &res_tail, left_set->data);
 		left_set = left_set->next;
 		count++;
 	}
 
 
-	Set result((res_head->next?res_head->next:nullptr), count);
-	return result;
+	return { res_head,count };
 }
 
-*/
+
