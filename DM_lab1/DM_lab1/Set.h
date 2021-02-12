@@ -69,6 +69,7 @@ public:
 using namespace std;
 
 
+
 string Set<string>::Name() const{
     return name;
 }
@@ -103,49 +104,46 @@ node<T>* Set<T>::Find(const T& data) {
     return nullptr;
 }
 
-//template <typename T>
-//Set<T>::~Set() {
-//    node<T>* tmp = head;
+template <typename T>
+Set<T>::~Set() {
+    node<T>* tmp = head;
+    if (size) {
+        while (head) {
+            tmp = tmp->next;
+            delete head;           
+            head = tmp;
+            size--;
+        }
+    }
+}
+
+//Set<std::string>::~Set() {
+//    node<std::string>* tmp = head;
 //    cout << name << endl;
 //    if (size) {
 //        while (head) {
 //            tmp = tmp->next;
-//            delete head;
-//            
+//            if (head->data.size())
+//                delete head;
 //            head = tmp;
 //            size--;
 //        }
 //    }
 //}
-
-Set<std::string>::~Set() {
-    node<std::string>* tmp = head;
-    cout << name << endl;
-    if (size) {
-        while (head) {
-            tmp = tmp->next;
-            if (head->data.size())
-                delete head;
-            head = tmp;
-            size--;
-        }
-    }
-}
-
-Set<Set<string>>::~Set() {
-    node<Set<string>>* tmp = head;
-    cout << name << endl;
-    if (size) {
-        while (head) {
-            tmp = tmp->next;
-            if (head->data.Power())
-                delete head;
-
-            head = tmp;
-            size--;
-        }
-    }
-}
+//
+//Set<Set<string>>::~Set() {
+//    node<Set<string>>* tmp = head;
+//    cout << name << endl;
+//    if (size) {
+//        while (head) {
+//            tmp = tmp->next;
+//            if (head->data.Power())
+//                delete head;
+//            head = tmp;
+//            size--;
+//        }
+//    }
+//}
 
 
 template <typename T>
@@ -171,7 +169,7 @@ Set<string>::Set(node<string>* _head, size_t _size) {
 
 Set<string>::Set(vector <string> elems) {
 
-    for (const auto& item : elems) {
+    for (auto& item : elems) {
         this->Add(item);
     }
     name = "unknown";
@@ -202,7 +200,7 @@ void Set<T>::ChangeName(const string& new_name) {
 }
 
 template <typename T>
-bool Set<T>::Check(const T& data) {
+bool Set<T>::Check(const T& data){
     if (this->Find(data) != nullptr) {
         return true;
     }
@@ -267,14 +265,18 @@ int Set<T>::Del(const T& data) {
     return 0;
 
 }
+template <typename T>
 
-void Set<string>::Print() {
-    node<string>* tmp = head;
-    for (size_t i = 0; i < size - 1; i++) {
-        cout << tmp->data << ' ';
+void Set<T>::Print() {
+    node<T>* tmp = head;
+    if (!size) {
+        cout << "Empty set" << endl;
+        return;
+    }
+    for (size_t i = 0; i < size; i++) {
+        cout << tmp->data << endl;
         tmp = tmp->next;
     }
-    cout << tmp->data;
 }
 
 template <typename T>
@@ -282,6 +284,11 @@ bool operator<(const Set<T>& lhs, const Set<T>& rhs) {
     return lhs.Name() < rhs.Name();
 }
 
+// for printing names of all existing sets via Print()
+ostream& operator<<(ostream& stream, const Set<string>& s) {
+    stream << s.Name();
+    return stream;
+}
 template <typename T>
 bool operator>(const Set<T>& lhs, const Set<T>& rhs) {
     return lhs.Name() > rhs.Name();
@@ -291,6 +298,13 @@ template <typename T>
 bool operator==(const Set<T>& lhs, const Set<T>& rhs) {
     return lhs.Name() == rhs.Name();
 }
+
+template <typename T>
+bool operator!=(const Set<T>& lhs, const Set<T>& rhs) {
+    return lhs.Name() != rhs.Name();
+}
+
+
 
 
 void Append(node<string>** head, node<string>** tail, string new_data) {
