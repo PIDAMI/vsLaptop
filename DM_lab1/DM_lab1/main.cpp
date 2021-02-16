@@ -5,11 +5,11 @@ using namespace std;
 
 
 
-Set<Set<string>> init() {
+Set<Set<string>>* init() {
 	cout << "Programm executes operations on sets of strings\n"
-		"Type help to see available commands and their short explanation"
-		" and help [command] for more details on a particular command\n";
-	Set<Set<string>> main("main");
+		"Type help to see available commands and their short explanation\n"
+		"Type help [command] for more details on a particular command\n";
+	Set<Set<string>>* main = new Set<Set<string>>("main");
 	return main;
 }
 
@@ -31,69 +31,69 @@ void help(string command) {
 			"xor <xor_set> <set1> <set2>\t\t\tCalculate exclusive intersection of <set1> and <set2> and name it <xor_set>\n"
 			"diff <diff_set> <set1> <set2>\t\t\tCalculate difference of <set1> and <set2> and name it <dif_set>\n"
 			"print <set>\t\t\t\t\tPrint elements of set <set>\n"
-			"list\t\t\t\t\tPrint names of all created sets\n\n";
+			"list\t\t\t\t\t\tPrint names of all created sets\n\n";
 	}
-	else if (command == " create") {
+	else if (command == "create") {
 		cout << "\tcreate <set>\nCreates an empty set named <set>.\n"
 			"Names cannot contain whitespaces.\n"
 			"Creating a set with no name or with the name of an existing set will cause and error message";
 	}
-	else if (command == " remove") {
+	else if (command == "remove") {
 		cout << "\tremove <set>\nDeletes the set named <set>.\n"
 			"To use a set with the same name later on, make a new one with the command create.\n"
 			"An attempt to delete non-existing set will cause an error message.\n";
 	}
-	else if (command == " delete") {
+	else if (command == "delete") {
 		cout << "\tdelete <set> \"<element1>\" \"<element2>\"...\nDeletes elements named <element1>, <element2> ..."
 			"from the set <set>.\nElements must be enclosed in quotes and separated by whitespaces. "
 			"An attempt to delete non-existing element will cause an error message"
 			" as well as deleting from non-existing set.\n";
 	}
-	else if (command == " check") {
+	else if (command == "check") {
 		cout << "\tcheck <set> \"<element>\"\nCheck if set <set> contains <element>."
 			" Element must be enclosed in quotes. "
 			"An attempt to call command using the name of non-existing set will cause an error message.\n";
 	}
-	else if (command == " add") {
+	else if (command == "add") {
 		cout << "\tadd <set> \"<element1>\" \"<element2>\" ...\n"
 			"Adds <element1>, <element2> ... to set <set>. "
 			"Elements must be enclosed in quotes, separated by whitespaces and "
 			"have length of not more than 80 characters. "
 			"An attempt to add an invalid arguement as well as adding to non-existing set will cause an error message.\n";
 	}
-	else if (command == " power") {
+	else if (command == "power") {
 		cout << "\tpower <set>\nSee the power of the set <set>. "
 			"An attempt to call command for non-existing set will cause an error-message.\n";
 	}
-	else if (command == " includes") {
+	else if (command == "includes") {
 		cout << "\tincludes <set1> <set2>\tCheck if <set2> is a subset of <set1>\n"
 			"An attempt to call command for non-existing set will cause an error-message.\n";
 	}
-	else if (command == " rename") {
+	else if (command == "rename") {
 		cout << "\trename <set> <new_name>\nChange set's name from <set> to <new_name>.\n"
 			"An attempt to rename non-existing set will cause an error-message as well as "
 			"using name of already exising set for set's new name.\n";
 
 	}
-	else if (command == " union") {
+	else if (command == "union") {
 		cout << "union <union_set> <set1> <set2>\t"
 			"Calculate union of sets <set1> and <set2> and name it <union_set>"
 			"An attempt to call command for non-existing set will cause an error-message "
 			"as well as using name of already exising set for resulting set.\n";
 	}
-	else if (command == " intersection") {
+	else if (command == "intersection") {
 		cout << "intersection <intersection_set> <set1> <set2>\t"
 			"Calculate intersection of sets <set1> and <set2> and name it <intersection_set>\n"
 			"An attempt to call command for non-existing set will cause an error-message "
 			"as well as using name of already exising set for resulting set.\n";
 	}
-	else if (command == " xor") {
+	else if (command == "xor") {
 		cout << "xor <xor_set> <set1> <set2>\t"
 			"Calculate exclusive intersection of <set1> and <set2> and name it <xor_set>."
 			"An attempt to call command for non-existing set will cause an error-message "
 			"as well as using name of already exising set for resulting set.\n";
 	}
-	else if (command == " diff") {
+	else if (command == "diff") {
 		cout <<"diff <diff_set> <set1> <set2>\t"
 			"Calculate difference of <set1> and <set2> and name it <dif_set>. "
 			"An attempt to call command for non-existing set will cause an error-message "
@@ -105,7 +105,7 @@ void help(string command) {
 }
 
 bool has_one_operand(string command) {
-	return command == "create" || command == "remove" || command == "power";
+	return command == "create" || command == "remove" || command == "power" || command == "print";
 }
 
 bool has_two_operands(string command) {
@@ -115,13 +115,103 @@ bool has_two_operands(string command) {
 bool has_three_operands(string command) {
 	return command == "union" || command == "intersection" || command == "diff" || command == "xor";
 }
-bool has_many_operands(string command) {
+// made into separate function cuz of possible # of params
+bool add_or_del(string command) {
 	return command == "add" || command == "del";
 }
 
-bool valid_name(Set<Set<string>> main) {
-	return false;
+bool valid_name(Set<Set<string>>& main, const string& name) {
+	if (name.size() > 81 || main.Check(name))
+		return false;
+	return true;
+
 }
+
+
+void one_operand_action(Set<Set<string>>& main, string& command,const string& set_name) {
+	if (command == "add") {
+		main.Add(set_name);
+	}
+	else if (command == "remove") {
+		main.Del(set_name);
+	}
+	else if (command == "power") {
+		main.FindByName(set_name)->Power();
+	}
+	else if (command == "print") {
+		main.FindByName(set_name)->Print();
+	}
+	else {
+		throw invalid_argument("Invalid command");
+	}
+}
+
+void two_operand_action(Set<Set<string>>& main, string command, string set_name) {
+	//	return command == "rename" || command == "check" || command == "includes";
+	
+}
+
+// "abc" "qwe" ...
+vector <string> parse_elements(const string& rest_of_command) {
+	vector <string> res;
+	size_t opening_delim_pos = 0;
+	size_t closing_delim_pos = 0;
+	while (opening_delim_pos <= closing_delim_pos) {
+		opening_delim_pos = rest_of_command.find(" \"", closing_delim_pos);
+		cout << "opening_delim_pos " << opening_delim_pos << endl;
+		//if (opening_delim_pos == string::npos) {
+		//	string message = "Invalid format: " + rest_of_command;
+		//	throw invalid_argument(message);
+		//}
+		closing_delim_pos = rest_of_command.find("\"", opening_delim_pos + 2);
+		cout << "closing_delim_pos " << closing_delim_pos << endl;
+		if (closing_delim_pos > opening_delim_pos) {
+			string word = rest_of_command.substr(opening_delim_pos + 2, closing_delim_pos - opening_delim_pos - 2);
+			res.push_back(word);
+		}
+	}
+
+	return res;
+
+}
+//todo
+
+// "q" "zxc qwe" "z w" ->  ,q, ,zxc qwe,
+vector<string> tokenize(const string& str, const string& delim)
+{
+	vector<string> tokens;
+	size_t p0 = 0, p1 = string::npos;
+
+	/*p1 = str.find_first_of("\"", p0);
+	if (p1 != string::npos) {
+		string token = str.substr(p0, p1 - p0);
+		tokens.push_back(token);
+	}
+	p0 = str.find_first_not_of("\"", p1);*/
+	while (p0 != string::npos)
+	{
+		p1 = str.find_first_of(delim, p0);
+		if (p1 != p0)
+		{
+			string token = str.substr(p0, p1 - p0);
+			tokens.push_back(token);
+		}
+		p0 = str.find_first_not_of(delim, p1);
+	}
+	return tokens;
+
+}
+
+
+
+void add_or_del_action(Set<Set<string>>& main, string command, string set_name, string words) {
+
+	//todo: words parses 
+
+}
+
+
+
 
 void parse_command(string input, Set<Set<string>> main, Set<string>& valid_commands) {
 	stringstream stream(input);
@@ -132,7 +222,7 @@ void parse_command(string input, Set<Set<string>> main, Set<string>& valid_comma
 	}
 
 	string operands;
-	getline(stream, operands);
+	stream >> operands;
 	if (command == "help") {
 		help(operands);
 	}
@@ -140,18 +230,34 @@ void parse_command(string input, Set<Set<string>> main, Set<string>& valid_comma
 		main.Print();
 	}
 	else {
-		
-		if (has_one_operand(command)) {
-			string set_name;
-			stream >> set_name;
-			string rest_of_command;//check if set_name was the last thing in command
-			getline(stream, rest_of_command);
+		string set_name = operands;
+		//stream >> set_name;
+		if (!valid_name(main, set_name))
+			throw invalid_argument("Invalid set name");
+		string rest_of_command; //check if set_name was the last word in command
+		getline(stream, rest_of_command);
+		if (add_or_del(command)) {
 			if (rest_of_command.size() == 0) {
-
+				string message = "No elements found to " + command;
+				throw invalid_argument(message);
+			}
+			// "..." "..."
+			else {
+				vector <string> words = parse_elements(rest_of_command);
+				add_or_del_action(main, command, set_name, rest_of_command);
+			}				
+		}
+		else if (has_one_operand(command)) {
+			if (rest_of_command.size() == 0) {
+				one_operand_action(main, command, set_name);
+			}
+			else {
+				string message = "Unknown parameters: " + rest_of_command;
+				throw invalid_argument(message);
 			}
 		}
-		else if (has_two_operands(command)) {
-
+		else if (has_two_operands(command)) {// command + name + rest_of_command
+		
 		}
 		else if (has_three_operands(command)) {
 
@@ -168,70 +274,64 @@ void parse_command(string input, Set<Set<string>> main, Set<string>& valid_comma
 
 int main()
 {
-	vector <string> commands = { "help", "create", "remove", "add", "del",
-								"rename", "check", "power", "union", "intersection",
-								"includes", "xor", "diff", "print", "list" };
-	Set<string> valid_commands(commands);
-
-	
-	Set<Set<string>> main = init();//sets are sotred by names, which are given when initialized
-	string input("");
+	string str("\"a w\" \"a\"");
 	try {
-		parse_command(input, main, valid_commands);
+		vector <string> q = parse_elements(str);
+		for (auto c : q) {
+			cout << c << endl;
+		}
 	}
-	catch (invalid_argument& exc) {
+	catch (exception& exc) {
 		cout << exc.what() << endl;
 	}
 
-
-	//while (getline(cin,input)){ //ctrl-c to exit programm
-	//	
-	//}
-
-
-	//Set<string> z("first");
-	//main.Add(z);
-	//main.FindByName("first")->Add("sus");
-	//main.FindByName("first")->Add("sas");
-	//main.Add({"second"});
-	//cout << main.FindByName("first")->Power();
-	//main.Del({"first"});
-
-
-
 	return 0;
-	/*
-	Set valid_commands({"create","clear","delete","check","power", "add",
-						"help", "union", "intersection", "includes",
-						"xor", "diff", "print", "list"});
 	
+	
+	
+	try {
 
-	string input, i;
-	cout << "Enter the commands: ";
-	getline(cin, input);
-	stringstream s(input);
-	string action;
-	s >> action;
-	if (valid_commands.Check(action)) {
 
+
+
+
+
+
+
+		/*vector <string> commands = { "help", "create", "remove", "add", "del",
+									"rename", "check", "power", "union", "intersection",
+									"includes", "xor", "diff", "print", "list" };
+		Set<string> valid_commands(commands);*/
+
+
+
+		Set<Set<string>>* main = init();//sets are sotred by names, which are given when initialized
+		
+		/*Set<string> z("set1");
+		z.Add("qwe");
+		main->Add(z);
+		cout << main->FindByName("set1")->Power();*/
+
+		string s = "set2";
+		main->Add(s);
+		main->FindByName(s)->Add("zzz");
+		cout << main->FindByName(s)->Power();
+
+		/*string input("help");
+		try {
+			parse_command(input, main, valid_commands);
+		}
+		catch (invalid_argument& exc) {
+			cout << exc.what() << endl;
+		}*/
+
+
+
+
+		delete main;
 	}
-
-	
-
-	
-	
-
-
-	return 0;*/
+	catch(invalid_argument& exc) {
+		cout << exc.what() << endl;
+	}
+	return 0;
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.

@@ -48,5 +48,7 @@
     <TestDuration Test="SetXOR.XORItselfReturnEmpty" Duration="1" />
     <TestDuration Test="SetXOR.NoCommonElemsReturnUnion" Duration="1" />
     <TestDuration Test="SetXOR.SomeCommonElemsReturnValidVal" Duration="1" />
+    <TestDuration Test="SetMainAdd.AddEmptySetReturnValidVal" Duration="1" />
+    <TestDuration Test="SetMainAdd.AddSeveralSetsReturnValidVal" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

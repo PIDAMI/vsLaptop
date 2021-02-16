@@ -1,5 +1,7 @@
 ﻿  interpolationcpp.cpp
+  interpol_main.cpp
   main.cpp
-D:\79088\Documents\GitHub\vsLaptop\lab_Num\lab_Num\main.cpp(26,14): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+D:\79088\Documents\GitHub\vsLaptop\lab_Num\lab_Num\main.cpp(5,2): error C2065: vector: необъявленный идентификатор
+D:\79088\Documents\GitHub\vsLaptop\lab_Num\lab_Num\main.cpp(5,9): error C2065: vector: необъявленный идентификатор
+D:\79088\Documents\GitHub\vsLaptop\lab_Num\lab_Num\main.cpp(5,8): error C2062: тип "bool" не требуется
   Создание кода...
-  lab_Num.vcxproj -> D:\79088\Documents\GitHub\vsLaptop\lab_Num\Debug\lab_Num.exe

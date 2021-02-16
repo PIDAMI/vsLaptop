@@ -8,7 +8,6 @@
 #include <string>
 #include <sstream>
 #include <vector>
-//#include <algorithm>
 
 template <typename T>
 struct node {
@@ -23,6 +22,8 @@ struct node {
 
 node<std::string>* merge_lists(node<std::string>* a, node<std::string>* b, size_t& resulting_size);
 void Append(node<std::string>** head, node<std::string>** tail, std::string new_data);
+
+// check for russian letters
 template <typename T>
 class Set
 {
@@ -33,7 +34,6 @@ private:
     node<T>* Find(const T& data);
 public:
     
-
     Set();
     Set(const std::string& n);
     Set(node<T>* _head, size_t _size);
@@ -49,26 +49,14 @@ public:
     Set Union(const Set& b);
     bool Includes(const Set& b);
     Set Intersection(const Set& b);
-    //node* Head();
     Set Subtract(const Set& b);
     Set XOR(const Set& b);
-
-
     void Print();
 };
-
-//todo: class of all classes
-
-
-
-
-
 
 
 
 using namespace std;
-
-
 
 string Set<string>::Name() const{
     return name;
@@ -107,14 +95,13 @@ node<T>* Set<T>::Find(const T& data) {
 template <typename T>
 Set<T>::~Set() {
     node<T>* tmp = head;
-    if (size) {
-        while (head) {
-            tmp = tmp->next;
-            delete head;           
-            head = tmp;
-            size--;
-        }
+    while (head) {
+        tmp = tmp->next;
+        delete head;           
+        head = tmp;
+        size--;
     }
+    cout << name << endl;
 }
 
 //Set<std::string>::~Set() {
@@ -207,6 +194,7 @@ bool Set<T>::Check(const T& data){
     return false;
 
 }
+
 template <typename T>
 int Set<T>::Add(const T& data) {
     if ((this->Check(data))) {
