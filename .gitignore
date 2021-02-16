@@ -2,7 +2,14 @@
 # Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
 ################################################################################
 
-*.opendb
-/laba1
-CMakeProject1/**
-*.ipch
+*.opendb  
+*.vs  
+*.ipch  
+*.log  
+*.tlog  
+*.obj  
+*.idb  
+*.pdb  
+*.exe  
+*.ilk  
+#
