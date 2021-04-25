@@ -49,10 +49,12 @@ std::vector<Vector> runge_kutta(double a, double b, double h, double ya, double 
 		y.push_back(y[i] + h / 4 * (k1[0] + 3 * k3[0]));
 		yy.push_back(yy[i] + h / 4 * (k1[1] + 3 * k3[1]));
 
-		//cout << "k1 " << k1 << endl;
-		//cout << "k2 " << k2 << endl;
-		//cout << "k3 " << k3 << endl;
-		//cout << "y " << y[i + 1] << endl;
+		std::cout << "k1 " << k1[0] << ' ' <<  k1[1] <<std::endl;
+		std::cout << "k2 " << k2[0] << ' ' << k2[1] << std::endl;
+		std::cout << "k3 " << k3[0] << ' ' << k3[1] << std::endl;
+		std::cout << "y " << y[i + 1] << std::endl;
+		std::cout << "y\' " << yy[i + 1] << std::endl;
+
 	}
 	std::vector<Vector> res = {y,yy};
 
@@ -79,7 +81,9 @@ Vector reduction(double a, double b, double h,
 		uua = A / alpha[1];
 		ua = 0;
 	}
+	std::cout << "U: " << std::endl;
 	auto U = runge_kutta(a, b, h, ua, uua, f_heterogen);
+	std::cout << "V: " << std::endl;
 	auto V = runge_kutta(a, b, h, va, vva, f_homogen);
 	Vector u = U[0];
 	Vector uu = U[1];
@@ -88,11 +92,12 @@ Vector reduction(double a, double b, double h,
 
 	double C = ((B - beta[0] * u[u.size() - 1] - beta[1] * uu[uu.size() - 1])
 		/ (beta[0] * v[v.size() - 1] + beta[1] * vv[vv.size() - 1]));
-
+	std::cout <<  "C " << C << std::endl;
 	for (int i = 0; i < u.size(); i++) {
 		res.push_back(u[i] + C * v[i]);
+		std::cout << "y" << i << ' ' <<res[i] << std::endl;
 	}
-
+	
 
 	return res;
 }

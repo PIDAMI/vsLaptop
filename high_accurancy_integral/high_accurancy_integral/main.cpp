@@ -17,8 +17,8 @@ int main(int argc, char** argv) {
 
 	ofstream file("d.txt");
 
-	gauss_lobato(0.01, _a, _b);
-	return 0;
+	//gauss_lobato(0.01, _a, _b);
+	//return 0;
 
 
 

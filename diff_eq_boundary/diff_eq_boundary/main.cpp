@@ -34,9 +34,9 @@ int main(int argc, char** argv) {
 	}
 
 
-	int action = 4; // 1 - init, 2 - err, 3 - max, 4 - init_val
+	int action = 1; // 1 - init, 2 - err, 3 - max, 4 - init_val
 	int coef = 1; // 1 - y(a) = A, 2 - 0.4 y(a) + 0.9 y'(a) = A, 1.2 + 0.5 
-	double h = 0.01;
+	double h = 0.25;
 
 	if (argc > 1)
 		h = strtod(argv[1], NULL);

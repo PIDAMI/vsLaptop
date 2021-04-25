@@ -62,9 +62,10 @@ int main() {
             sf::Vertex(sf::Vector2f(100,   0), sf::Color::Red, sf::Vector2f(10,  0))
         };
         // draw it
-
-        window.draw(vertices, 4, sf::Quads);
-
+        //window.draw(vertices, 4, sf::Quads);
+        auto t = RectangleShape({ 50,100 });
+        t.setFillColor(Color::Blue);
+        window.draw(t);
         window.display();
     }
 

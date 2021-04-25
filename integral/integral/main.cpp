@@ -2,43 +2,11 @@
 #include <stdlib.h>
 #include "integral.h"
 using namespace std;
-
+using namespace nk;
 
 
 int main(int argc, char** argv) {
 	
-	//double a = 0.5;
-	//double b = 2.0;
-
-
-	//long n = 1;
-	//double H = b - a;
-	//double I_trap_prev, I_trap_next;
-	//I_trap_next = H / 2 * (Y_A + Y_B);
-	//double I_rect;
-	//vector <double> x;
-	//vector <double> y;
-	//printf("x0 = %lf, x1 = %lf\n", a, b);
-	//printf("y0 = %lf, y1 = %lf\n", Y_A, Y_B);
-	//printf("1: %lf\n\n", I_trap_next);
-	//do {
-	//	I_trap_prev = I_trap_next;
-	//	x = nodes(a, b, n, H);
-	//	y = Y(x);
-	//	I_rect = H * rect_sum(y);
-	//	H /= 2;
-	//	n *= 2;
-	//	I_trap_next = (I_rect + I_trap_prev) / 2;
-
-	//	print(x);
-	//	printf("\n");
-	//	print(y);
-	//	printf("\n%d %lf\t%lf\n\n", n, I_trap_next- exact_val, (I_trap_next-I_trap_prev)/3);
-	//} while (n < 4);
-
-
-
-
 
 	int n = 5;// 12 - max
 	int action = 1;// 1 - iterations, 2 - fact_error, 3 - max/min theoretical error
@@ -55,7 +23,7 @@ int main(int argc, char** argv) {
 	}
 
 
-	trap(0.01, A, B, Y_A, Y_B, action);
+	nk::trap(0.01, A, B, Y_A, Y_B, action);
 
 	return 0;
 

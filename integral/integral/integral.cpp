@@ -3,11 +3,13 @@
 using namespace std;
 // n = 4
 
+
+
 tuple<int, double> f() {
 	return { 2,2.4 };
 }
 
-vector<double> nodes(double a, double b, int n, double H) {
+vector<double> nk::nodes(double a, double b, int n, double H) {
 	vector<double> res;
 	double h = H / 2;
 	res.push_back(a + h);
@@ -19,7 +21,7 @@ vector<double> nodes(double a, double b, int n, double H) {
 
 
 // n = 1
-double trapezoidal(const vector<double>& x,const vector <double>& y) {
+double nk::trapezoidal(const vector<double>& x,const vector <double>& y) {
 	vector <double> res;
 	double sum = 0;
 	int n = x.size();
@@ -42,7 +44,7 @@ double trapezoidal(const vector<double>& x,const vector <double>& y) {
 }
 
 
-double simple_trapezoidal(const vector<double>& x, const vector <double>& y) {
+double nk::simple_trapezoidal(const vector<double>& x, const vector <double>& y) {
 	vector <double> res;
 	double sum = 0;
 	int n = x.size();
@@ -53,7 +55,7 @@ double simple_trapezoidal(const vector<double>& x, const vector <double>& y) {
 	return sum;
 }
 
-double rect_sum(const vector<double>& v) {
+double nk::rect_sum(const vector<double>& v) {
 	double res=0;
 	for (auto& i : v)
 		res += i;
@@ -61,15 +63,16 @@ double rect_sum(const vector<double>& v) {
 }
 
 
-double integral() {
-	return 2.0;
-}
 
-vector<double> Y(const vector<double>& x) {
+
+vector<double> nk::Y(const vector<double>& x) {
 	vector<double> res;
 	for (auto& node : x) {
-		res.push_back(pow(node, 5) - 5.2 * pow(node, 3) + 5.5 * pow(node, 2) - 7 * node - 3.5);
+		res.push_back(cos(0.4*node)*(pow(node, 5) - 5.2 * pow(node, 3) + 
+					  5.5 * pow(node, 2) - 7 * node - 3.5));
 	}
+
+	trap_calls += x.size();
 	return res;
 }
 
@@ -77,8 +80,8 @@ vector<double> Y(const vector<double>& x) {
 
 
 // - (b-a)/12 h^2 f''
-vector<double> trap(double eps, double a, double b, double yy_a, double yy_b, int action) {
-	long n = 1;
+vector<double> nk::trap(double eps, double a, double b, double yy_a, double yy_b, int action) {
+	int n = 1;
 	double H = b - a;
 	double I_trap_prev, I_trap_next;
 	I_trap_next = H / 2 * (yy_b + yy_a);
@@ -101,24 +104,29 @@ vector<double> trap(double eps, double a, double b, double yy_a, double yy_b, in
 		//printf("\n");
 		//print(y);
 		
-		printf("iter %d: %lf, ex_er %lf,runge %lf\n", n, I_trap_next, I_trap_next - exact_val, fabs(I_trap_next - I_trap_prev)/3);
-	} while (pow(fabs(I_trap_next - I_trap_prev),1) > 3 * eps);
+		//printf("iter %d: %lf, ex_er %lf,runge %lf\n", n, I_trap_next, I_trap_next - exact_val, fabs(I_trap_next - I_trap_prev)/3);
+	} while (fabs(I_trap_next - I_trap_prev) > 3 * eps);
 
-	if (action == 1)
-		return { static_cast<double>(n) };
-	else if (action == 2)
-		return { fabs(I_trap_next - I_trap_prev)/3 };
-	else
-		return { theor_min_err(a,b,n),theor_max_err(a,b,n), I_trap_next - exact_val };
+	double calls = trap_calls;
+	trap_calls = 0;
+
+	return { I_trap_next , log2(n), calls };
+
+	//if (action == 1)
+	//	return { static_cast<double>(n) };
+	//else if (action == 2)
+	//	return { fabs(I_trap_next - I_trap_prev)/3 };
+	//else if (action == 3)
+	//	return { theor_min_err(a,b,n),theor_max_err(a,b,n), I_trap_next - exact_val };
 }
 
 
-double theor_max_err(double a, double b, int n) {
+double nk::theor_max_err(double a, double b, int n) {
 	double h = (b - a) / n;
 	return fabs((a - b) / 12 * pow(h, 2) * Y_MAX);
 }
 
-double theor_min_err(double a, double b, int n) {
+double nk::theor_min_err(double a, double b, int n) {
 	double h = (b - a) / n;
 	return fabs((a - b) / 12 * pow(h, 2) * Y_MIN);
 }

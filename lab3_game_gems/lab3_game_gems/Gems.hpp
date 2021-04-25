@@ -3,7 +3,12 @@
 #include <vector>
 #include "SFML/Graphics.hpp"
 
-
+class Gem :public sf::RectangleShape {
+public:
+    
+private:
+    
+};
 
 
 class Board : public sf::RectangleShape {
@@ -12,6 +17,5 @@ public:
     void setFillColor(const std::vector<sf::Color>& colors);
     void setFillColor(const sf::Color& color, size_t x_coord, size_t y_coord);
 private:
-    std::vector<std::vector<RectangleShape>> _board;
-    
+    std::vector<std::vector<RectangleShape>> _board;    
 };
